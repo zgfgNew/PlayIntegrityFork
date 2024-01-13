@@ -23,6 +23,7 @@ public final class EntryPoint {
     public static void init() {
         spoofProvider();
         spoofDevice();
+        if (verboseLogs > 99) logFields();
     }
 
     public static void readJson(String data) {
@@ -139,6 +140,27 @@ public final class EntryPoint {
         }
         field.setAccessible(false);
         LOG(String.format("[%s]: %s -> %s", name, oldValue, value));
+    }
+
+    private static String logParseField(Field field) {
+        Object value = null;
+        String type = field.getType().getName();
+        String name = field.getName();
+        try {
+            value = field.get(null);
+        } catch (IllegalAccessException|NullPointerException e) {
+            return String.format("Couldn't access '%s' field value: " + e, name);
+        }
+        return String.format("<%s> %s: %s", type, name, String.valueOf(value));
+    }
+
+    private static void logFields() {
+        for (Field field : Build.class.getDeclaredFields()) {
+            LOG("Build " + logParseField(field));
+        }
+        for (Field field : Build.VERSION.class.getDeclaredFields()) {
+            LOG("Build.VERSION " + logParseField(field));
+        }
     }
 
     static void LOG(String msg) {
