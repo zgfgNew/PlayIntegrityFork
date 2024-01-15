@@ -83,7 +83,7 @@ public final class EntryPoint {
 
     private static void setField(String name, String value) {
         if (value.isEmpty()) {
-            LOG(String.format("%s is empty, skipping...", name));
+            LOG(String.format("%s is empty, skipping", name));
             return;
         }
 

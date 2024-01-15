@@ -189,12 +189,12 @@ private:
 
         std::vector<std::string> eraseKeys;
         for (auto &jsonList: json.items()) {
-            if (VERBOSE_LOGS > 1) LOGD("Parsing %s...", jsonList.key().c_str());
+            if (VERBOSE_LOGS > 1) LOGD("Parsing %s", jsonList.key().c_str());
             if (jsonList.key().find_first_of("*.") != std::string::npos) {
                 // Name contains . or * (wildcard) so assume real property name
                 if (!jsonList.value().is_null() && jsonList.value().is_string()) {
                     if (jsonList.value() == "") {
-                        LOGD("%s is empty, skipping...", jsonList.key().c_str());
+                        LOGD("%s is empty, skipping", jsonList.key().c_str());
                     } else {
                         if (VERBOSE_LOGS > 0) LOGD("Adding '%s' to properties list", jsonList.key().c_str());
                         jsonProps[jsonList.key()] = jsonList.value();
@@ -212,30 +212,30 @@ private:
     }
 
     void inject() {
-        LOGD("JNI: Get system classloader");
+        LOGD("JNI: Getting system classloader");
         auto clClass = env->FindClass("java/lang/ClassLoader");
         auto getSystemClassLoader = env->GetStaticMethodID(clClass, "getSystemClassLoader", "()Ljava/lang/ClassLoader;");
         auto systemClassLoader = env->CallStaticObjectMethod(clClass, getSystemClassLoader);
 
-        LOGD("JNI: Create class loader");
+        LOGD("JNI: Creating class loader");
         auto dexClClass = env->FindClass("dalvik/system/InMemoryDexClassLoader");
         auto dexClInit = env->GetMethodID(dexClClass, "<init>", "(Ljava/nio/ByteBuffer;Ljava/lang/ClassLoader;)V");
         auto buffer = env->NewDirectByteBuffer(dexVector.data(), static_cast<jlong>(dexVector.size()));
         auto dexCl = env->NewObject(dexClClass, dexClInit, buffer, systemClassLoader);
 
-        LOGD("JNI: Load class");
+        LOGD("JNI: Loading class");
         auto loadClass = env->GetMethodID(clClass, "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;");
         auto entryClassName = env->NewStringUTF("es.chiteroman.playintegrityfix.EntryPoint");
         auto entryClassObj = env->CallObjectMethod(dexCl, loadClass, entryClassName);
 
         auto entryClass = (jclass) entryClassObj;
 
-        LOGD("JNI: Send JSON");
+        LOGD("JNI: Sending JSON");
         auto receiveJson = env->GetStaticMethodID(entryClass, "receiveJson", "(Ljava/lang/String;)V");
         auto javaStr = env->NewStringUTF(json.dump().c_str());
         env->CallStaticVoidMethod(entryClass, receiveJson, javaStr);
 
-        LOGD("JNI: Call init");
+        LOGD("JNI: Calling init");
         auto entryInit = env->GetStaticMethodID(entryClass, "init", "(I)V");
         env->CallStaticVoidMethod(entryClass, entryInit, VERBOSE_LOGS);
     }
