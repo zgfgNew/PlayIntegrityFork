@@ -27,7 +27,7 @@ public final class EntryPoint {
         spoofDevice();
     }
 
-    public static void readJson(String data) {
+    public static void receiveJson(String data) {
         try (JsonReader reader = new JsonReader(new StringReader(data))) {
             reader.beginObject();
             while (reader.hasNext()) {

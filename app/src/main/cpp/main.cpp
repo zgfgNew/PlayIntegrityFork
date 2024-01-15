@@ -212,30 +212,30 @@ private:
     }
 
     void inject() {
-        LOGD("get system classloader");
+        LOGD("JNI: Get system classloader");
         auto clClass = env->FindClass("java/lang/ClassLoader");
         auto getSystemClassLoader = env->GetStaticMethodID(clClass, "getSystemClassLoader", "()Ljava/lang/ClassLoader;");
         auto systemClassLoader = env->CallStaticObjectMethod(clClass, getSystemClassLoader);
 
-        LOGD("create class loader");
+        LOGD("JNI: Create class loader");
         auto dexClClass = env->FindClass("dalvik/system/InMemoryDexClassLoader");
         auto dexClInit = env->GetMethodID(dexClClass, "<init>", "(Ljava/nio/ByteBuffer;Ljava/lang/ClassLoader;)V");
         auto buffer = env->NewDirectByteBuffer(dexVector.data(), static_cast<jlong>(dexVector.size()));
         auto dexCl = env->NewObject(dexClClass, dexClInit, buffer, systemClassLoader);
 
-        LOGD("load class");
+        LOGD("JNI: Load class");
         auto loadClass = env->GetMethodID(clClass, "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;");
         auto entryClassName = env->NewStringUTF("es.chiteroman.playintegrityfix.EntryPoint");
         auto entryClassObj = env->CallObjectMethod(dexCl, loadClass, entryClassName);
 
         auto entryClass = (jclass) entryClassObj;
 
-        LOGD("read json");
-        auto readProps = env->GetStaticMethodID(entryClass, "readJson", "(Ljava/lang/String;)V");
+        LOGD("JNI: Send JSON");
+        auto receiveJson = env->GetStaticMethodID(entryClass, "receiveJson", "(Ljava/lang/String;)V");
         auto javaStr = env->NewStringUTF(json.dump().c_str());
-        env->CallStaticVoidMethod(entryClass, readProps, javaStr);
+        env->CallStaticVoidMethod(entryClass, receiveJson, javaStr);
 
-        LOGD("call init");
+        LOGD("JNI: Call init");
         auto entryInit = env->GetStaticMethodID(entryClass, "init", "(I)V");
         env->CallStaticVoidMethod(entryClass, entryInit, VERBOSE_LOGS);
     }
