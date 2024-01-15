@@ -20,10 +20,11 @@ public final class EntryPoint {
 
     private static final Map<String, String> map = new HashMap<>();
 
-    public static void init() {
+    public static void init(int level) {
+        verboseLogs = level;
+        if (verboseLogs > 99) logFields();
         spoofProvider();
         spoofDevice();
-        if (verboseLogs > 99) logFields();
     }
 
     public static void readJson(String data) {
@@ -69,12 +70,7 @@ public final class EntryPoint {
 
     static void spoofDevice() {
         for (String key : map.keySet()) {
-            // Verbose logging if VERBOSE_LOGS with level number is last entry
-            if (key.equals("VERBOSE_LOGS")) {
-                verboseLogs = Integer.parseInt(map.get("VERBOSE_LOGS"));
-            } else {
-                setField(key, map.get(key));
-            }
+            setField(key, map.get(key));
         }
     }
 
