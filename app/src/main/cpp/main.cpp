@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 #include "zygisk.hpp"
-#include "shadowhook.h"
+#include "dobby.h"
 #include "json.hpp"
 
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "PIF/Native", __VA_ARGS__)
@@ -67,18 +67,17 @@ static void my_system_property_read_callback(const prop_info *pi, T_Callback cal
 }
 
 static void doHook() {
-    shadowhook_init(SHADOWHOOK_MODE_UNIQUE, false);
-    void *handle = shadowhook_hook_sym_name(
-            "libc.so",
-            "__system_property_read_callback",
-            reinterpret_cast<void *>(my_system_property_read_callback),
-            reinterpret_cast<void **>(&o_system_property_read_callback)
-    );
+    void *handle = DobbySymbolResolver(nullptr, "__system_property_read_callback");
     if (handle == nullptr) {
         LOGD("Couldn't find '__system_property_read_callback' handle");
         return;
     }
     LOGD("Found '__system_property_read_callback' handle at %p", handle);
+    DobbyHook(
+        handle,
+        reinterpret_cast<dobby_dummy_func_t>(my_system_property_read_callback),
+        reinterpret_cast<dobby_dummy_func_t *>(&o_system_property_read_callback)
+    );
 }
 
 class PlayIntegrityFix : public zygisk::ModuleBase {
