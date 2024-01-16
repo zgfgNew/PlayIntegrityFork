@@ -12,6 +12,7 @@ public final class CustomProvider extends Provider {
 
     @Override
     public synchronized Service getService(String type, String algorithm) {
+        EntryPoint.spoofDevice();
         return super.getService(type, algorithm);
     }
 }
