@@ -10,8 +10,9 @@ A Zygisk module which fixes "ctsProfileMatch" (SafetyNet) and "MEETS_DEVICE_INTE
 
 To use this module you must have one of the following:
 
-- Magisk with Zygisk enabled.
-- KernelSU with [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) module installed.
+- [Magisk](https://github.com/topjohnwu/Magisk) with Zygisk (and, if not also using Shamiko, Enforce DenyList) enabled.
+- [KernelSU](https://github.com/tiann/KernelSU) with [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) module installed.
+- [APatch](https://github.com/bmax121/APatch) with [ZygiskNext MOD](https://github.com/Yervant7/ZygiskNext) module installed.
 
 ## About module
 
@@ -21,9 +22,9 @@ The purpose of the module is to avoid hardware attestation.
 
 ## About 'custom.pif.json' file
 
-You can fill out the included template [example.pif.json](https://raw.githubusercontent.com/osm0sis/PlayIntegrityFork/main/module/example.pif.json) from the module directory then rename it to custom.pif.json to spoof custom values to the GMS unstable process. It will be used instead of any included pif.json.
+You can fill out the included template [example.pif.json](https://raw.githubusercontent.com/osm0sis/PlayIntegrityFork/main/module/example.pif.json) from the module directory then rename it to custom.pif.json to spoof custom values to the GMS unstable process. It will be used instead of any included pif.json (none included currently).
 
-You can't use values from recent devices due them triggering full hardware backed attestation.
+As a general rule you can't use values from recent devices due to them only being allowed with full hardware backed attestation.
 
 Older formatted custom.pif.json files from cross-forks and previous releases will be automatically migrated to the latest format.
 
@@ -37,6 +38,10 @@ A migration may also be performed manually with `sh migrate.sh` and custom.pif.j
 - [UI Workflow Guide - Build, edit and test custom.pif.json using PixelFlasher on PC](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89189970)
 
 </details>
+
+## About 'custom.app_replace.list' file
+
+You can customize the included default [example.app_replace.list](https://raw.githubusercontent.com/osm0sis/PlayIntegrityFork/main/module/example.app_replace.list) from the module directory then rename it to custom.app_replace.list to systemlessly replace any additional conflicting custom ROM injection app paths to disable them.
 
 ## Troubleshooting
 
@@ -68,13 +73,11 @@ Note clearing Google Play Services app ***data*** will then require you to reset
 
 ### Read module logs
 
-You can read module logs using this command directly after boot:
+You can read module logs using one of these commands directly after boot:
 
-```
-adb shell "logcat | grep 'PIF/'"
-```
+`adb shell "logcat | grep 'PIF/'"` or `su -c "logcat | grep 'PIF/'"`
 
-Add "VERBOSE_LOGS" with a value of "0", "1", "2", "3" or "100" as the last entry of your custom.pif.json to enable higher logging levels; "100" will dump all the system properties that DroidGuard is checking.
+Add a "VERBOSE_LOGS" entry with a value of "0", "1", "2", "3" or "100" to your custom.pif.json to enable higher logging levels; "100" will dump all Build fields, and all the system properties that DroidGuard is checking.
 
 ## Can this module pass MEETS_STRONG_INTEGRITY?
 
