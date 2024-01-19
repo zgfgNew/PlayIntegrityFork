@@ -20,6 +20,10 @@ public final class EntryPoint {
 
     private static final Map<String, String> map = new HashMap<>();
 
+    public static Integer getVerboseLogs() {
+        return verboseLogs;
+    }
+
     public static void init(int level) {
         verboseLogs = level;
         if (verboseLogs > 99) logFields();

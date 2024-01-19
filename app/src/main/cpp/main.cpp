@@ -31,7 +31,7 @@ static void modify_callback(void *cookie, const char *name, const char *value, u
 
     // Spoof specific property values
     if (prop == "sys.usb.state") {
-        value = "mtp";
+        value = "mtp"; // Hide USB Debugging
     }
 
     if (jsonProps.count(prop)) {
@@ -121,14 +121,14 @@ public:
 
         if (dexSize < 1) {
             close(fd);
-            LOGD("Couldn't read classes.dex");
+            LOGD("Couldn't read dex file");
             api->setOption(zygisk::DLCLOSE_MODULE_LIBRARY);
             return;
         }
 
         if (jsonSize < 1) {
             close(fd);
-            LOGD("Couldn't read pif.json");
+            LOGD("Couldn't read json file");
             api->setOption(zygisk::DLCLOSE_MODULE_LIBRARY);
             return;
         }
@@ -141,8 +141,8 @@ public:
 
         close(fd);
 
-        LOGD("Read from file descriptor file 'classes.dex' -> %ld bytes", dexSize);
-        LOGD("Read from file descriptor file 'pif.json' -> %ld bytes", jsonSize);
+        LOGD("Read from file descriptor for 'dex' -> %ld bytes", dexSize);
+        LOGD("Read from file descriptor for 'json' -> %ld bytes", jsonSize);
 
         std::string data(jsonVector.cbegin(), jsonVector.cend());
         json = nlohmann::json::parse(data, nullptr, false, true);
@@ -216,13 +216,13 @@ private:
         auto getSystemClassLoader = env->GetStaticMethodID(clClass, "getSystemClassLoader", "()Ljava/lang/ClassLoader;");
         auto systemClassLoader = env->CallStaticObjectMethod(clClass, getSystemClassLoader);
 
-        LOGD("JNI: Creating class loader");
+        LOGD("JNI: Creating module classloader");
         auto dexClClass = env->FindClass("dalvik/system/InMemoryDexClassLoader");
         auto dexClInit = env->GetMethodID(dexClClass, "<init>", "(Ljava/nio/ByteBuffer;Ljava/lang/ClassLoader;)V");
         auto buffer = env->NewDirectByteBuffer(dexVector.data(), static_cast<jlong>(dexVector.size()));
         auto dexCl = env->NewObject(dexClClass, dexClInit, buffer, systemClassLoader);
 
-        LOGD("JNI: Loading class");
+        LOGD("JNI: Loading module class");
         auto loadClass = env->GetMethodID(clClass, "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;");
         auto entryClassName = env->NewStringUTF("es.chiteroman.playintegrityfix.EntryPoint");
         auto entryClassObj = env->CallObjectMethod(dexCl, loadClass, entryClassName);
