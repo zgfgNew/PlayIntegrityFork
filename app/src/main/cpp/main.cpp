@@ -30,8 +30,10 @@ static void modify_callback(void *cookie, const char *name, const char *value, u
     std::string prop(name);
 
     // Spoof specific property values
-    if (prop == "sys.usb.state") {
-        value = "mtp"; // Hide USB Debugging
+    if (prop == "init.svc.adbd") {
+        value = "stopped";
+    } else if (prop == "sys.usb.state") {
+        value = "mtp";
     }
 
     if (jsonProps.count(prop)) {
