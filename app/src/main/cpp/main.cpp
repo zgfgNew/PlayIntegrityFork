@@ -93,21 +93,30 @@ public:
         bool isGms = false, isGmsUnstable = false;
 
         auto rawProcess = env->GetStringUTFChars(args->nice_name, nullptr);
+        auto rawDir = env->GetStringUTFChars(args->app_data_dir, nullptr);
 
-        if (rawProcess) {
-            std::string_view process(rawProcess);
-
-            isGms = process.starts_with("com.google.android.gms");
-            isGmsUnstable = process.compare("com.google.android.gms.unstable") == 0;
+        // Prevent crash on apps with no data dir
+        if (rawDir == nullptr) {
+            env->ReleaseStringUTFChars(args->nice_name, rawProcess);
+            api->setOption(zygisk::DLCLOSE_MODULE_LIBRARY);
+            return;
         }
 
+        std::string_view process(rawProcess);
+        std::string_view dir(rawDir);
+
+        isGms = dir.ends_with("/com.google.android.gms");
+        isGmsUnstable = process == "com.google.android.gms.unstable";
+
         env->ReleaseStringUTFChars(args->nice_name, rawProcess);
+        env->ReleaseStringUTFChars(args->app_data_dir, rawDir);
 
         if (!isGms) {
             api->setOption(zygisk::DLCLOSE_MODULE_LIBRARY);
             return;
         }
 
+        // We are in GMS now, force unmount
         api->setOption(zygisk::FORCE_DENYLIST_UNMOUNT);
 
         if (!isGmsUnstable) {
@@ -115,7 +124,9 @@ public:
             return;
         }
 
+        std::vector<char> jsonVector;
         long dexSize = 0, jsonSize = 0;
+
         int fd = api->connectCompanion();
 
         read(fd, &dexSize, sizeof(long));
@@ -135,22 +146,22 @@ public:
             return;
         }
 
+        LOGD("Read from file descriptor for 'dex' -> %ld bytes", dexSize);
+        LOGD("Read from file descriptor for 'json' -> %ld bytes", jsonSize);
+
         dexVector.resize(dexSize);
         read(fd, dexVector.data(), dexSize);
 
-        std::vector<char> jsonVector(jsonSize);
+        jsonVector.resize(jsonSize);
         read(fd, jsonVector.data(), jsonSize);
 
         close(fd);
 
-        LOGD("Read from file descriptor for 'dex' -> %ld bytes", dexSize);
-        LOGD("Read from file descriptor for 'json' -> %ld bytes", jsonSize);
-
-        std::string data(jsonVector.cbegin(), jsonVector.cend());
-        json = nlohmann::json::parse(data, nullptr, false, true);
+        std::string jsonString(jsonVector.cbegin(), jsonVector.cend());
+        json = nlohmann::json::parse(jsonString, nullptr, false, true);
 
         jsonVector.clear();
-        data.clear();
+        jsonString.clear();
     }
 
     void postAppSpecialize(const zygisk::AppSpecializeArgs *args) override {
