@@ -1,3 +1,11 @@
+## Custom Fork v7
+- Fix ROM non-/system spoof injection app replacement
+- Add missing XiaomiEUInject-Stub to the default/example replace list
+- Improve code, scripts and logging
+- Fix ROM injection when using KernelSU and APatch
+- Spoof init.svc.adbd to DroidGuard by default to further hide USB Debugging
+- Improve hiding from detection by user apps
+
 ## Custom Fork v6
 - Improve migration script to be more portable, e.g. for desktop use
 - Add custom function to hack global props without increasing the change counter
@@ -5,13 +13,5 @@
 - Add customizable example.app_replace.list file to replace conflicting custom ROM apps
 - Improve VERBOSE_LOGS to be any json entry, and dump full Build fields at 100
 - Change DroidGuard prop spoof hooking method to Dobby for now
-
-## Custom Fork v5
-- Allow spoofing literally any system property, supporting * lead wildcard to match multiple
-- Remove all backwards compat cruft and deprecated entries
-- Add log levels with VERBOSE_LOGS last json entry of 0, 1, 2, 3 or 100
-- Spoof sys.usb.state to DroidGuard by default to hide USB Debugging
-- Update example json for properties
-- Add migration script to automatically upgrade old custom.pif.json during install/update (may also be run manually)
 
 _[Previous changelogs](https://github.com/osm0sis/PlayIntegrityFork/releases)_

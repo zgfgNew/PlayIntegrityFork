@@ -10,9 +10,9 @@ A Zygisk module which fixes "ctsProfileMatch" (SafetyNet) and "MEETS_DEVICE_INTE
 
 To use this module you must have one of the following:
 
-- [Magisk](https://github.com/topjohnwu/Magisk) with Zygisk (and, if not also using Shamiko, Enforce DenyList) enabled.
-- [KernelSU](https://github.com/tiann/KernelSU) with [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) module installed.
-- [APatch](https://github.com/bmax121/APatch) with [ZygiskNext MOD](https://github.com/Yervant7/ZygiskNext) module installed.
+- [Magisk](https://github.com/topjohnwu/Magisk) with Zygisk (and, if not also using Shamiko, Enforce DenyList) enabled
+- [KernelSU](https://github.com/tiann/KernelSU) with [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) module installed
+- [APatch](https://github.com/bmax121/APatch) with [ZygiskNext MOD](https://github.com/Yervant7/ZygiskNext) module installed
 
 ## About module
 
@@ -41,7 +41,7 @@ A migration may also be performed manually with `sh migrate.sh` and custom.pif.j
 
 ## About 'custom.app_replace.list' file
 
-You can customize the included default [example.app_replace.list](https://raw.githubusercontent.com/osm0sis/PlayIntegrityFork/main/module/example.app_replace.list) from the module directory then rename it to custom.app_replace.list to systemlessly replace any additional conflicting custom ROM injection app paths to disable them.
+You can customize the included default [example.app_replace.list](https://raw.githubusercontent.com/osm0sis/PlayIntegrityFork/main/module/example.app_replace.list) from the module directory then rename it to custom.app_replace.list to systemlessly replace any additional conflicting custom ROM spoof injection app paths to disable them.
 
 ## Troubleshooting
 
@@ -50,10 +50,11 @@ You can customize the included default [example.app_replace.list](https://raw.gi
 If you are failing basicIntegrity (SafetyNet) or MEETS_BASIC_INTEGRITY (Play Integrity) something is wrong in your setup. Recommended steps in order to find the problem:
 
 - Disable all modules except this one
+- Try a different (ideally known working) custom.pif.json
 
 Some modules which modify system can trigger DroidGuard detection, never hook GMS processes.
 
-### Failing DEVICE verdict (on KernelSU)
+### Failing DEVICE verdict (on KernelSU/APatch)
 
 - Disable ZygiskNext
 - Reboot
@@ -63,13 +64,13 @@ Some modules which modify system can trigger DroidGuard detection, never hook GM
 
 Follow these steps:
 
-- Flash the module in Magisk/KernelSU
+- Reflash the module in your root manager app
 - Clear Google Wallet cache (if you have it)
 - Clear Google Play Store cache and data
 - Clear Google Play Services (com.google.android.gms) cache and data (Optionally skip clearing data and wait some time, ~24h, for it to resolve on its own)
 - Reboot
 
-Note clearing Google Play Services app ***data*** will then require you to reset any WearOS devices paired to your device.
+Note: Clearing Google Play Services app ***data*** will then require you to reset any WearOS devices paired to your device.
 
 ### Read module logs
 
