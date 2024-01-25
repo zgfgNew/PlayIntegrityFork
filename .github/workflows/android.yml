@@ -31,7 +31,8 @@ jobs:
       run: ./gradlew assembleRelease
 
     - name: Upload CI module zip as artifact zip
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: PlayIntegrityFork-CI_#${{ github.run_number }}
         path: module/*
+        compression-level: 9
