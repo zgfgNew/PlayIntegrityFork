@@ -1,8 +1,8 @@
 ## Custom Fork v7
-- Fix ROM non-/system spoof injection app replacement
+- Fix non-/system ROM spoof injection app replacement
 - Add missing XiaomiEUInject-Stub to the default/example replace list
 - Improve code, scripts and logging
-- Fix ROM injection when using KernelSU and APatch
+- Fix ROM spoof injection app replacement when using KernelSU and APatch
 - Spoof init.svc.adbd to DroidGuard by default to further hide USB Debugging
 - Improve hiding from detection by user apps
 
