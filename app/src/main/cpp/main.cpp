@@ -14,7 +14,7 @@
 #define JSON_FILE_PATH "/data/adb/modules/playintegrityfix/pif.json"
 #define CUSTOM_JSON_FILE_PATH "/data/adb/modules/playintegrityfix/custom.pif.json"
 
-static int VERBOSE_LOGS = 0;
+static int verboseLogs = 0;
 
 static std::map<std::string, std::string> jsonProps;
 
@@ -52,7 +52,7 @@ static void modify_callback(void *cookie, const char *name, const char *value, u
     }
 
     if (oldValue == value) {
-        if (VERBOSE_LOGS > 99) LOGD("[%s]: %s (unchanged)", name, oldValue);
+        if (verboseLogs > 99) LOGD("[%s]: %s (unchanged)", name, oldValue);
     } else {
         LOGD("[%s]: %s -> %s", name, oldValue, value);
     }
@@ -80,7 +80,7 @@ static int my_uname_callback(struct utsname *buf) {
         const char *oldValue = buf->release;
 
         if (unameRelease.empty() || oldValue == value) {
-            if (VERBOSE_LOGS > 2) LOGD("[uname_release]: %s (unchanged)", oldValue);
+            if (verboseLogs > 2) LOGD("[uname_release]: %s (unchanged)", oldValue);
         } else if (unameRelease.size() < SYS_NMLN) {
             LOGD("[uname_release]: %s -> %s", oldValue, value);
             strncpy(buf->release, value, unameRelease.size());
@@ -219,20 +219,20 @@ private:
     void readJson() {
         LOGD("JSON contains %d keys!", static_cast<int>(json.size()));
 
-        // Verbose logging if VERBOSE_LOGS with level number is present
-        if (json.contains("VERBOSE_LOGS")) {
-            if (!json["VERBOSE_LOGS"].is_null() && json["VERBOSE_LOGS"].is_string() && json["VERBOSE_LOGS"] != "") {
-                VERBOSE_LOGS = stoi(json["VERBOSE_LOGS"].get<std::string>());
-                if (VERBOSE_LOGS > 0) LOGD("Verbose logging (level %d) enabled!", VERBOSE_LOGS);
+        // Verbose logging if verbose_logs with level number is present
+        if (json.contains("verbose_logs")) {
+            if (!json["verbose_logs"].is_null() && json["verbose_logs"].is_string() && json["verbose_logs"] != "") {
+                verboseLogs = stoi(json["verbose_logs"].get<std::string>());
+                if (verboseLogs > 0) LOGD("Verbose logging (level %d) enabled!", verboseLogs);
             } else {
-                LOGD("Error parsing VERBOSE_LOGS!");
+                LOGD("Error parsing verbose_logs!");
             }
-            json.erase("VERBOSE_LOGS");
+            json.erase("verbose_logs");
         }
 
         // Parse kernel uname release string as a special case (neither field or property)
         if (json.contains("uname_release")) {
-            if (VERBOSE_LOGS > 1) LOGD("Parsing uname_release");
+            if (verboseLogs > 1) LOGD("Parsing uname_release");
             if (!json["uname_release"].is_null() && json["uname_release"].is_string() && json["uname_release"] != "") {
                 unameRelease = json["uname_release"].get<std::string>();
             } else {
@@ -243,14 +243,14 @@ private:
 
         std::vector<std::string> eraseKeys;
         for (auto &jsonList: json.items()) {
-            if (VERBOSE_LOGS > 1) LOGD("Parsing %s", jsonList.key().c_str());
+            if (verboseLogs > 1) LOGD("Parsing %s", jsonList.key().c_str());
             if (jsonList.key().find_first_of("*.") != std::string::npos) {
                 // Name contains . or * (wildcard) so assume real property name
                 if (!jsonList.value().is_null() && jsonList.value().is_string()) {
                     if (jsonList.value() == "") {
                         LOGD("%s is empty, skipping", jsonList.key().c_str());
                     } else {
-                        if (VERBOSE_LOGS > 0) LOGD("Adding '%s' to properties list", jsonList.key().c_str());
+                        if (verboseLogs > 0) LOGD("Adding '%s' to properties list", jsonList.key().c_str());
                         jsonProps[jsonList.key()] = jsonList.value();
                     }
                 } else {
@@ -291,7 +291,7 @@ private:
 
         LOGD("JNI: Calling init");
         auto entryInit = env->GetStaticMethodID(entryClass, "init", "(I)V");
-        env->CallStaticVoidMethod(entryClass, entryInit, VERBOSE_LOGS);
+        env->CallStaticVoidMethod(entryClass, entryInit, verboseLogs);
     }
 };
 
