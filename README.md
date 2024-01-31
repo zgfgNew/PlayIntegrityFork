@@ -33,6 +33,7 @@ A migration may also be performed manually with `sh migrate.sh` and custom.pif.j
 <details>
 <summary>Resources</summary>
 
+- [PIF FAQ - Frequently Asked Questions](https://xdaforums.com/t/pif-faq.4653307)
 - [How-To Guide - Info to help find build.prop files, then create and use a custom.pif.json](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89189572)
 - [gen_pif_custom.sh - Script to generate a custom.pif.json from device dump build.prop files](https://xdaforums.com/t/tools-zips-scripts-osm0sis-odds-and-ends-multiple-devices-platforms.2239421/post-89173470)
 - [UI Workflow Guide - Build, edit and test custom.pif.json using PixelFlasher on PC](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89189970)
