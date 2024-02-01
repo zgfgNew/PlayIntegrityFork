@@ -1,6 +1,5 @@
 #include <android/log.h>
 #include <sys/system_properties.h>
-#include <sys/utsname.h>
 #include <unistd.h>
 
 #include "zygisk.hpp"
@@ -17,8 +16,6 @@
 static int verboseLogs = 0;
 
 static std::map<std::string, std::string> jsonProps;
-
-static std::string unameRelease;
 
 typedef void (*T_Callback)(void *, const char *, const char *, uint32_t);
 
@@ -70,27 +67,7 @@ static void my_system_property_read_callback(const prop_info *pi, T_Callback cal
     return o_system_property_read_callback(pi, modify_callback, cookie);
 }
 
-static int (*o_uname_callback)(struct utsname *);
-
-static int my_uname_callback(struct utsname *buf) {
-    auto ret = o_uname_callback(buf);
-
-    if (buf && ret == 0) {
-        const char *value = unameRelease.c_str();
-        const char *oldValue = buf->release;
-
-        if (unameRelease.empty() || oldValue == value) {
-            if (verboseLogs > 2) LOGD("[uname_release]: %s (unchanged)", oldValue);
-        } else if (unameRelease.size() < SYS_NMLN) {
-            LOGD("[uname_release]: %s -> %s", oldValue, value);
-            strncpy(buf->release, value, unameRelease.size());
-        }
-    }
-
-    return ret;
-}
-
-static void doPropHook() {
+static void doHook() {
     void *handle = DobbySymbolResolver(nullptr, "__system_property_read_callback");
     if (handle == nullptr) {
         LOGD("Couldn't find '__system_property_read_callback' handle");
@@ -99,17 +76,6 @@ static void doPropHook() {
     LOGD("Found '__system_property_read_callback' handle at %p", handle);
     DobbyHook(handle, reinterpret_cast<dobby_dummy_func_t>(my_system_property_read_callback),
         reinterpret_cast<dobby_dummy_func_t *>(&o_system_property_read_callback));
-}
-
-static void doUnameHook() {
-    void *handle = DobbySymbolResolver(nullptr, "uname");
-    if (handle == nullptr) {
-        LOGD("Couldn't find 'uname' handle");
-        return;
-    }
-    LOGD("Found 'uname' handle at %p", handle);
-    DobbyHook(handle, reinterpret_cast<dobby_dummy_func_t>(my_uname_callback),
-        reinterpret_cast<dobby_dummy_func_t *>(&o_uname_callback));
 }
 
 class PlayIntegrityFix : public zygisk::ModuleBase {
@@ -198,8 +164,7 @@ public:
         if (dexVector.empty() || json.empty()) return;
 
         readJson();
-        doPropHook();
-        doUnameHook();
+        doHook();
         inject();
 
         dexVector.clear();
@@ -228,17 +193,6 @@ private:
                 LOGD("Error parsing verbose_logs!");
             }
             json.erase("verbose_logs");
-        }
-
-        // Parse kernel uname release string as a special case (neither field or property)
-        if (json.contains("uname_release")) {
-            if (verboseLogs > 1) LOGD("Parsing uname_release");
-            if (!json["uname_release"].is_null() && json["uname_release"].is_string() && json["uname_release"] != "") {
-                unameRelease = json["uname_release"].get<std::string>();
-            } else {
-                LOGD("Error parsing uname_release!");
-            }
-            json.erase("uname_release");
         }
 
         std::vector<std::string> eraseKeys;
