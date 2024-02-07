@@ -8,9 +8,9 @@
 
 A Zygisk module which fixes "ctsProfileMatch" (SafetyNet) and "MEETS_DEVICE_INTEGRITY" (Play Integrity).
 
-To use this module you must have one of the following:
+To use this module you must have one of the following (latest versions):
 
-- [Magisk](https://github.com/topjohnwu/Magisk) with Zygisk (and, if not also using Shamiko, Enforce DenyList) enabled
+- [Magisk](https://github.com/topjohnwu/Magisk) with Zygisk enabled (and Enforce DenyList enabled if NOT also using [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases))
 - [KernelSU](https://github.com/tiann/KernelSU) with [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) module installed
 - [APatch](https://github.com/bmax121/APatch) with [ZygiskNext MOD](https://github.com/Yervant7/ZygiskNext) module installed
 
@@ -30,13 +30,24 @@ Older formatted custom.pif.json files from cross-forks and previous releases wil
 
 A migration may also be performed manually with `sh migrate.sh` and custom.pif.json in the same directory, or from a file explorer app that supports script execution.
 
-<details>
-<summary>Resources</summary>
+<details><summary>
 
-- [PIF FAQ - Frequently Asked Questions](https://xdaforums.com/t/pif-faq.4653307/)
-- [How-To Guide - Info to help find build.prop files, then create and use a custom.pif.json](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89189572)
-- [gen_pif_custom.sh - Script to generate a custom.pif.json from device dump build.prop files](https://xdaforums.com/t/tools-zips-scripts-osm0sis-odds-and-ends-multiple-devices-platforms.2239421/post-89173470)
-- [UI Workflow Guide - Build, edit and test custom.pif.json using PixelFlasher on PC](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89189970)
+### Resources</summary>
+
+**FAQ:**
+- [PIF FAQ](https://xdaforums.com/t/pif-faq.4653307/) - Frequently Asked Questions (READ FIRST!)
+
+**Guides:**
+- [How-To Guide](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89189572) - Info to help find build.prop files, then manually create and use a custom.pif.json
+- [Complete Noobs' Guide](https://xdaforums.com/t/how-to-search-find-your-own-fingerprints-noob-friendly-a-comprehensive-guide-w-tips-discussion-for-complete-noobs-from-one.4645816/) - A more in-depth basic explainer of the How-To Guide above
+- [UI Workflow Guide](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89189970) - Build/find, edit, and test custom.pif.json using PixelFlasher on PC
+- [Tasker PIF Testing Helper](https://xdaforums.com/t/pif-testing-helper-tasker-profile-for-testing-fingerprints.4644827/) - Test custom.pif.json using Tasker on your device
+
+**Scripts:**
+- [gen_pif_custom.sh](https://xdaforums.com/t/tools-zips-scripts-osm0sis-odds-and-ends-multiple-devices-platforms.2239421/post-89173470) - Script to generate a custom.pif.json from device dump build.prop files
+- [autopif.sh](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89233630) - Script to extract the latest working Xiaomi.eu fingerprint (though frequently banned) to test an initial setup
+- [pickaprint.sh](https://xdaforums.com/t/module-data-custom-pif-json-files-collection-for-play-integrity-fix.4646739/) - Script to help find a random working custom.pif.json (rarely banned) for long-term use
+- [install-random-fp.sh](https://xdaforums.com/t/script-for-randomly-installing-custom-device-fingerprints.4647408/) - Script to randomly switch between multiple working fingerprints found by the user
 
 </details>
 
@@ -61,7 +72,7 @@ Some modules which modify system can trigger DroidGuard detection, never hook GM
 - Reboot
 - Enable ZygiskNext
 
-### Failing DEVICE verdict (on custom kernel/custom ROM)
+### Failing DEVICE verdict (on custom kernel/ROM)
 
 - Check the kernel release string with command `adb shell uname -r` or `uname -r`
 - If it's on the [Known Banned Kernel List](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89308909) then inform your kernel developer/ROM maintainer to remove their branding for their next build
@@ -94,7 +105,7 @@ No.
 ## About Play Integrity, SafetyNet is deprecated
 
 You can read more
-here: [Play Integrity API Info - XDA Forums](https://xdaforums.com/t/info-play-integrity-api-replacement-for-safetynet.4479337/)
+here: [Play Integrity API FAQ/Information - XDA Forums](https://xdaforums.com/t/info-play-integrity-api-replacement-for-safetynet.4479337/)
 
 ## Credits
 
