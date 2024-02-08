@@ -2,9 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ "main" ]
+    paths-ignore: '**.md'
   pull_request:
-    branches: [ "main" ]
+    paths-ignore: '**.md'
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
     - name: Check out
       uses: actions/checkout@v4
       with:
-        submodules: "recursive"
+        submodules: 'recursive'
         fetch-depth: 0
 
     - name: Set up JDK 17
@@ -34,5 +34,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: PlayIntegrityFork-CI_#${{ github.run_number }}
-        path: module/*
+        path: 'module/*'
         compression-level: 9
