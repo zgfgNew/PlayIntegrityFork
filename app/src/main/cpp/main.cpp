@@ -184,15 +184,15 @@ private:
     void readJson() {
         LOGD("JSON contains %d keys!", static_cast<int>(json.size()));
 
-        // Verbose logging if verbose_logs with level number is present
-        if (json.contains("verbose_logs")) {
-            if (!json["verbose_logs"].is_null() && json["verbose_logs"].is_string() && json["verbose_logs"] != "") {
-                verboseLogs = stoi(json["verbose_logs"].get<std::string>());
+        // Verbose logging if verboseLogs with level number is present
+        if (json.contains("verboseLogs")) {
+            if (!json["verboseLogs"].is_null() && json["verboseLogs"].is_string() && json["verboseLogs"] != "") {
+                verboseLogs = stoi(json["verboseLogs"].get<std::string>());
                 if (verboseLogs > 0) LOGD("Verbose logging (level %d) enabled!", verboseLogs);
             } else {
-                LOGD("Error parsing verbose_logs!");
+                LOGD("Error parsing verboseLogs!");
             }
-            json.erase("verbose_logs");
+            json.erase("verboseLogs");
         }
 
         std::vector<std::string> eraseKeys;
