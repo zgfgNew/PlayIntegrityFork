@@ -82,9 +82,9 @@ Note: Some modules which modify system can trigger DroidGuard detections, as can
 Follow these steps:
 
 - Reflash the module in your root manager app
-- Clear Google Wallet cache (if you have it)
-- Clear Google Play Store cache and data
-- Clear Google Play Services (com.google.android.gms) cache and data (Optionally skip clearing data and wait some time, ~24h, for it to resolve on its own)
+- Clear Google Wallet (com.google.android.apps.walletnfcrel) and/or Google Pay (com.google.android.apps.nbu.paisa.user) cache, if you have them installed
+- Clear Google Play Store (com.android.vending) cache and data
+- Clear Google Play Services (com.google.android.gms) cache and data, or, optionally skip clearing data and wait some time (~24h) for it to resolve on its own
 - Reboot
 
 Note: Clearing Google Play Services app ***data*** will then require you to reset any WearOS devices paired to your device.
