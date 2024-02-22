@@ -26,7 +26,7 @@ You can fill out the included template [example.pif.json](https://raw.githubuser
 
 As a general rule you can't use values from recent devices due to them only being allowed with full hardware backed attestation.
 
-Older formatted custom.pif.json files from cross-forks and previous releases will be automatically migrated to the latest format.
+Older formatted custom.pif.json files from cross-forks and previous releases will be automatically migrated to the latest format. Simply ensure the filename is custom.pif.json and place it in the module directory before upgrading.
 
 A migration may also be performed manually with `sh migrate.sh` and custom.pif.json in the same directory, or from a file explorer app that supports script execution.
 
