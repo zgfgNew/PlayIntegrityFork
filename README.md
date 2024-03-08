@@ -26,7 +26,7 @@ You can fill out the included template [example.pif.json](https://raw.githubuser
 
 Note this is just a template with the current suggested defaults, but with this fork you can include as few or as many android.os.Build class fields and Android system properties as needed to pass DEVICE verdict now and in the future if the enforced checks by Play Integrity change.
 
-As a general rule you can't use values from recent devices due to them only being allowed with full hardware backed attestation.
+As a general rule you can't use values from recent devices due to them only being allowed with full hardware backed attestation. See the Resources below for information and scripts to help find a working fingerprint.
 
 Older formatted custom.pif.json files from cross-forks and previous releases will be automatically migrated to the latest format. Simply ensure the filename is custom.pif.json and place it in the module directory before upgrading.
 
@@ -47,7 +47,6 @@ A migration may also be performed manually with `sh migrate.sh` and custom.pif.j
 - Scripts:
   - [gen_pif_custom.sh](https://xdaforums.com/t/tools-zips-scripts-osm0sis-odds-and-ends-multiple-devices-platforms.2239421/post-89173470) - Script to generate a custom.pif.json from device dump build.prop files
   - [autopif.sh](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89233630) - Script to extract the latest working Xiaomi.eu fingerprint (though frequently banned) to test an initial setup
-  - [pickaprint.sh](https://xdaforums.com/t/module-data-custom-pif-json-files-collection-for-play-integrity-fix.4646739/) - Script to help find a random working custom.pif.json (rarely banned) for long-term use
   - [install-random-fp.sh](https://xdaforums.com/t/script-for-randomly-installing-custom-device-fingerprints.4647408/) - Script to randomly switch between multiple working fingerprints found by the user
 
 </details>
