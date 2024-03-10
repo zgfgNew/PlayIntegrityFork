@@ -98,7 +98,7 @@ You can read module logs using one of these commands directly after boot:
 
 `adb shell "logcat | grep 'PIF/'"` or `su -c "logcat | grep 'PIF/'"`
 
-Add a "VERBOSE_LOGS" entry with a value of "0", "1", "2", "3" or "100" to your custom.pif.json to enable higher logging levels; "100" will dump all Build fields, and all the system properties that DroidGuard is checking.
+Add a "verboseLogs" entry with a value of "0", "1", "2", "3" or "100" to your custom.pif.json to enable higher logging levels; "100" will dump all Build fields, and all the system properties that DroidGuard is checking. Adding the entry can also be done using the migration script with the `sh migrate.sh --force --advanced` or `sh migrate.sh -f -a` command.
 
 ## Can this module pass MEETS_STRONG_INTEGRITY?
 
