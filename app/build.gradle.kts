@@ -5,7 +5,7 @@ plugins {
 android {
     namespace = "es.chiteroman.playintegrityfix"
     compileSdk = 34
-    ndkVersion = "26.1.10909125"
+    ndkVersion = "26.2.11394342"
     buildToolsVersion = "34.0.0"
 
     buildFeatures {
