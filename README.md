@@ -66,7 +66,7 @@ If you are failing basicIntegrity (SafetyNet) or MEETS_BASIC_INTEGRITY (Play Int
 - Disable all modules except this one
 - Try a different (ideally known working) custom.pif.json
 
-Note: Some modules which modify system can trigger DroidGuard detections, as can any which hook GMS processes.
+Note: Some modules which modify system (e.g. Xposed) can trigger DroidGuard detections, as can any which hook GMS processes (e.g. custom fonts).
 
 ### Failing DEVICE verdict (on KernelSU/APatch)
 
