@@ -10,7 +10,7 @@ A Zygisk module which fixes "ctsProfileMatch" (SafetyNet) and "MEETS_DEVICE_INTE
 
 To use this module you must have one of the following (latest versions):
 
-- [Magisk](https://github.com/topjohnwu/Magisk) with Zygisk enabled (and Enforce DenyList enabled if NOT also using [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases), for best results)
+- [Magisk](https://github.com/topjohnwu/Magisk) with Zygisk enabled (and Enforce DenyList enabled if NOT also using [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases)/[Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant), for best results)
 - [KernelSU](https://github.com/tiann/KernelSU) with [Zygisk Next](https://github.com/Dr-TSNG/ZygiskNext) module installed
 - [APatch](https://github.com/bmax121/APatch) with [Zygisk Next](https://github.com/Dr-TSNG/ZygiskNext) module installed
 
@@ -89,8 +89,6 @@ Note: Some modules which modify system (e.g. Xposed) can trigger DroidGuard dete
 - You may also try a different custom ROM, or go back to the stock ROM for your device, if available/possible
 
 ### Failing Play Protect/Store Certification and/or Google Wallet Tap To Pay Setup Security Requirements
-
-Follow these steps:
 
 - Reflash the module in your root manager app
 - Clear Google Wallet (com.google.android.apps.walletnfcrel) and/or Google Pay (com.google.android.apps.nbu.paisa.user) cache, if you have them installed
