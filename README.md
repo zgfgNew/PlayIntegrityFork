@@ -46,7 +46,8 @@ A migration may also be performed manually with `sh migrate.sh` and custom.pif.j
 
 - Scripts:
   - [gen_pif_custom.sh](https://xdaforums.com/t/tools-zips-scripts-osm0sis-odds-and-ends-multiple-devices-platforms.2239421/post-89173470) - Script to generate a custom.pif.json from device dump build.prop files
-  - [autopif.sh](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89233630) - Script to extract the latest working Xiaomi.eu fingerprint (though frequently banned) to test an initial setup
+  - [autopif.sh](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89233630) - Script to extract the latest working Xiaomi.eu fingerprint (though frequently banned and may be banned for RCS use while otherwise passing) to test an initial setup
+  - [pif-test-json-file.sh](https://xdaforums.com/t/tools-zips-scripts-osm0sis-odds-and-ends-multiple-devices-platforms.2239421/post-89482876) - Script to automate generating and testing json files to attempt to find working fingerprints 
   - [install-random-fp.sh](https://xdaforums.com/t/script-for-randomly-installing-custom-device-fingerprints.4647408/) - Script to randomly switch between multiple working fingerprints found by the user
 
 </details>
@@ -81,13 +82,19 @@ Note: Some modules which modify system (e.g. Xposed) can trigger DroidGuard dete
 - If it's on the [Known Banned Kernel List](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89308909) then inform your kernel developer/ROM maintainer to remove their branding for their next build
 - You may also try a different custom kernel, or go back to the default kernel for your ROM, if available/possible
 
-### Play Protect/Store Certification and Google Wallet Tap To Pay Setup Security Requirements
+### Failing DEVICE verdict (on custom ROM)
+
+- Check the ROM signing keys with command `adb shell unzip -l /system/etc/security/otacerts.zip` or `unzip -l /system/etc/security/otacerts.zip`
+- If the output shows the ROM is signed with the AOSP testkey then inform your ROM maintainer to start signing their builds with a private key for their next build and ideally also provide a ROM signature migration build to allow you to update to it without requiring a data wipe
+- You may also try a different custom ROM, or go back to the stock ROM for your device, if available/possible
+
+### Failing Play Protect/Store Certification and/or Google Wallet Tap To Pay Setup Security Requirements
 
 Follow these steps:
 
 - Reflash the module in your root manager app
 - Clear Google Wallet (com.google.android.apps.walletnfcrel) and/or Google Pay (com.google.android.apps.nbu.paisa.user) cache, if you have them installed
-- Clear Google Play Store (com.android.vending) cache and data
+- Clear Google Play Store (com.android.vending) and, if present, Google Play Protect Service (com.google.android.odad) cache and data
 - Clear Google Play Services (com.google.android.gms) cache and data, or, optionally skip clearing data and wait some time (~24h) for it to resolve on its own
 - Reboot
 
