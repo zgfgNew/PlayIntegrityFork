@@ -57,7 +57,7 @@ You can customize the included default [example.app_replace.list](https://raw.gi
 
 ## About 'autopif.sh' and 'killgms.sh' script files
 
-There's intentionally no custom./pif.json in my fork by default, because the goal remains to be futureproof, and including something that could/will be banned and obsolete the next day would be contrary to that goal. If you don't care to have your own private fingerprint to use or don't have time to look for one currently then simply run the extraction script from a root prompt with `sh autopif.sh` in the module directory (/data/adb/playintegrityfix/), or from a file explorer app that supports script execution.
+There's intentionally no custom./pif.json here by default, because the goal remains to be futureproof, and including something that could/will be banned and obsolete the next day would be contrary to that goal. If you don't care to have your own private fingerprint to use or don't have time to look for one currently then simply run the extraction script from a root prompt with `sh autopif.sh` in the module directory (/data/adb/playintegrityfix/), or from a file explorer app that supports script execution.
 
 The autopif script extracts the latest working Xiaomi.eu fingerprint (though frequently banned and may be banned for RCS use while otherwise passing Play Integrity and SafetyNet) to test an initial setup.
 
@@ -117,10 +117,6 @@ Add a "verboseLogs" entry with a value of "0", "1", "2", "3" or "100" to your cu
 
 No.
 
-## About Play Integrity (SafetyNet is deprecated)
-
-[Play Integrity API](https://xdaforums.com/t/info-play-integrity-api-replacement-for-safetynet.4479337/) - FAQ/information about PI (Play Integrity) replacing SN (SafetyNet)
-
 ## About Scripts-only mode
 
 An advanced mode intended for older Android <10 stock ROMs or those with stock-like values, (and some other rare special cases,) since they generally only need a few prop changes to pass Play Integrity DEVICE verdict. Due to this the majority of the previous information does not apply to or contradicts that of Scripts-only mode, so to avoid confusion it's contained in the Details area below.
@@ -135,6 +131,10 @@ An advanced mode intended for older Android <10 stock ROMs or those with stock-l
 - For best results, you should still most likely enable Magisk's Enforce DenyList option if NOT also using [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases) or [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant). The module will automatically add the Google Play Services DroidGuard process (com.google.android.gms.unstable) to the Magisk DenyList, if missing, since for Scripts-only mode it's necessary on some configurations (generally Android 9).
 
 </details>
+
+## About Play Integrity (SafetyNet is deprecated)
+
+[Play Integrity API](https://xdaforums.com/t/info-play-integrity-api-replacement-for-safetynet.4479337/) - FAQ/information about PI (Play Integrity) replacing SN (SafetyNet)
 
 ## Credits
 
