@@ -57,7 +57,7 @@ You can customize the included default [example.app_replace.list](https://raw.gi
 
 ## About 'autopif.sh' and 'killgms.sh' script files
 
-There's intentionally no custom./pif.json here by default, because the goal remains to be futureproof, and including something that could/will be banned and obsolete the next day would be contrary to that goal. If you don't care to have your own private fingerprint to use or don't have time to look for one currently then simply run the extraction script from a root prompt with `sh autopif.sh` in the module directory (/data/adb/playintegrityfix/), or from a file explorer app that supports script execution.
+There's intentionally no custom./pif.json here by default, because the goal remains to be futureproof, and including something that could/will be banned and obsolete the next day would be contrary to that goal. If you don't care to have your own private fingerprint to use or don't have time to look for one currently then simply run the extraction script from a root prompt with `sh autopif.sh` in the module directory (/data/adb/modules/playintegrityfix), or from a file explorer app that supports script execution.
 
 The autopif script extracts the latest working Xiaomi.eu fingerprint (though frequently banned and may be banned for RCS use while otherwise passing Play Integrity and SafetyNet) to test an initial setup.
 
@@ -119,7 +119,7 @@ No.
 
 ## About Scripts-only mode
 
-An advanced mode intended for older Android <10 stock ROMs or those with stock-like values, (and some other rare special cases,) since they generally only need a few prop changes to pass Play Integrity DEVICE verdict. Due to this the majority of the previous information does not apply to or contradicts that of Scripts-only mode, so to avoid confusion it's contained in the Details area below.
+An advanced mode intended for older Android <10 ROMs, mostly stock ROM or those with stock-like values, (and some other rare special cases), since they generally only need a few prop changes to pass Play Integrity DEVICE verdict. Due to this the majority of the previous information does not apply to or contradicts that of Scripts-only mode, so to avoid confusion it's contained in the Details area below.
 
 <details>
 <summary><strong>Details</strong></summary>
