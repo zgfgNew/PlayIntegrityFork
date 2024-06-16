@@ -46,7 +46,7 @@ A migration may also be performed manually with `sh migrate.sh` and custom.pif.j
 
 - Scripts:
   - [gen_pif_custom.sh](https://xdaforums.com/t/tools-zips-scripts-osm0sis-odds-and-ends-multiple-devices-platforms.2239421/post-89173470) - Script to generate a custom.pif.json from device dump build.prop files
-  - [pif-test-json-file.sh](https://xdaforums.com/t/tools-zips-scripts-osm0sis-odds-and-ends-multiple-devices-platforms.2239421/post-89482876) - Script to automate generating and testing json files to attempt to find working fingerprints 
+  - [pif-test-json-file.sh](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89561228) - Script to automate generating and testing json files to attempt to find working fingerprints 
   - [install-random-fp.sh](https://xdaforums.com/t/script-for-randomly-installing-custom-device-fingerprints.4647408/) - Script to randomly switch between multiple working fingerprints found by the user
 
 </details>
@@ -57,9 +57,9 @@ You can customize the included default [example.app_replace.list](https://raw.gi
 
 ## About 'autopif.sh' and 'killgms.sh' script files
 
-There's intentionally no custom./pif.json here by default, because the goal remains to be futureproof, and including something that could/will be banned and obsolete the next day would be contrary to that goal. If you don't care to have your own private fingerprint to use or don't have time to look for one currently then simply run the extraction script from a root prompt with `sh autopif.sh` in the module directory (/data/adb/modules/playintegrityfix), or from a file explorer app that supports script execution.
+There's intentionally no pif.json in the module because the goal remains to be futureproof, and including something that may be banned and obsolete within days would be contrary to that goal. If you don't care to have your own private fingerprint to use or don't have time to look for one currently then simply run the extraction script from a root prompt with `sh autopif.sh` in the module directory (/data/adb/modules/playintegrityfix), or from a file explorer app that supports script execution.
 
-The autopif script extracts the latest working Xiaomi.eu fingerprint (though frequently banned and may be banned for RCS use while otherwise passing Play Integrity and SafetyNet) to test an initial setup.
+The autopif script extracts the latest working Xiaomi.eu fingerprint (though frequently banned and may be banned for RCS use while otherwise passing Play Integrity and SafetyNet) ideally to test an initial setup.
 
 The killgms script forces the Google Play Services DroidGuard process (com.google.android.gms.unstable) to end, making it restart with the next attestation attempt; useful for testing out different private fingerprints without requiring a reboot in between.
 
@@ -119,7 +119,7 @@ No.
 
 ## About Scripts-only mode
 
-An advanced mode intended for older Android <10 ROMs, mostly stock ROM or those with stock-like values, (and some other rare special cases), since they generally only need a few prop changes to pass Play Integrity DEVICE verdict. Due to this the majority of the previous information does not apply to or contradicts that of Scripts-only mode, so to avoid confusion it's contained in the Details area below.
+An advanced feature intended for older Android <10 ROMs, mostly stock ROMs or those with stock-like values, (and some other rare special cases), since they generally only need a few prop changes to pass Play Integrity DEVICE verdict. Due to this the majority of the previous information does not apply to or contradicts that of Scripts-only mode, so to avoid confusion it's contained in the Details area below.
 
 <details>
 <summary><strong>Details</strong></summary>
