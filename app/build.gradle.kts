@@ -62,7 +62,7 @@ android {
 }
 
 dependencies {
-    implementation("dev.rikka.ndk.thirdparty:cxx:1.2.0")
+    implementation("org.lsposed.libcxx:libcxx:27.0.12077973")
 }
 
 tasks.register("copyFiles") {
