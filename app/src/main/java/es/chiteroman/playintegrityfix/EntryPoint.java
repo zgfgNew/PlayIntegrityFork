@@ -26,6 +26,7 @@ import java.util.Map;
 
 public final class EntryPoint {
     private static Integer verboseLogs = 0;
+    private static Integer spoofBuildEnabled = 1;
 
     private static final String signatureData = "MIIFyTCCA7GgAwIBAgIVALyxxl+zDS9SL68SzOr48309eAZyMA0GCSqGSIb3DQEBCwUAMHQxCzAJ\n" +
             "BgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQw\n" +
@@ -61,12 +62,17 @@ public final class EntryPoint {
         return verboseLogs;
     }
 
-    public static void init(int level) {
-        verboseLogs = level;
+    public static Integer getSpoofBuildEnabled() {
+        return spoofBuildEnabled;
+    }
+
+    public static void init(int logLevel, int spoofBuildVal, int spoofProviderVal, int spoofSignatureVal) {
+        verboseLogs = logLevel;
+        spoofBuildEnabled = spoofBuildVal;
         if (verboseLogs > 99) logFields();
-        spoofProvider();
-        spoofPackageManager();
-        spoofDevice();
+        if (spoofProviderVal > 0) spoofProvider();
+        if (spoofBuildVal > 0) spoofDevice();
+        if (spoofSignatureVal > 0) spoofPackageManager();
     }
 
     public static void receiveJson(String data) {

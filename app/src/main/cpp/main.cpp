@@ -14,6 +14,10 @@
 #define CUSTOM_JSON_FILE_PATH "/data/adb/modules/playintegrityfix/custom.pif.json"
 
 static int verboseLogs = 0;
+static int spoofBuild = 1;
+static int spoofProps = 1;
+static int spoofProvider = 1;
+static int spoofSignature = 0;
 
 static std::map<std::string, std::string> jsonProps;
 
@@ -164,7 +168,7 @@ public:
         if (dexVector.empty() || json.empty()) return;
 
         readJson();
-        doHook();
+        if (spoofProps > 0) doHook();
         inject();
 
         dexVector.clear();
@@ -184,7 +188,7 @@ private:
     void readJson() {
         LOGD("JSON contains %d keys!", static_cast<int>(json.size()));
 
-        // Verbose logging if verboseLogs with level number is present
+        // Verbose logging
         if (json.contains("verboseLogs")) {
             if (!json["verboseLogs"].is_null() && json["verboseLogs"].is_string() && json["verboseLogs"] != "") {
                 verboseLogs = stoi(json["verboseLogs"].get<std::string>());
@@ -193,6 +197,44 @@ private:
                 LOGD("Error parsing verboseLogs!");
             }
             json.erase("verboseLogs");
+        }
+
+        // Advanced spoofing settings
+        if (json.contains("spoofBuild")) {
+            if (!json["spoofBuild"].is_null() && json["spoofBuild"].is_string() && json["spoofBuild"] != "") {
+                spoofBuild = stoi(json["spoofBuild"].get<std::string>());
+                if (verboseLogs > 0) LOGD("Spoofing Build Fields set to %d!", spoofBuild);
+            } else {
+                LOGD("Error parsing spoofBuild!");
+            }
+            json.erase("spoofBuild");
+        }
+        if (json.contains("spoofProps")) {
+            if (!json["spoofProps"].is_null() && json["spoofProps"].is_string() && json["spoofProps"] != "") {
+                spoofProps = stoi(json["spoofProps"].get<std::string>());
+                if (verboseLogs > 0) LOGD("Spoofing System Properties set to %d!", spoofProps);
+            } else {
+                LOGD("Error parsing spoofProps!");
+            }
+            json.erase("spoofProps");
+        }
+        if (json.contains("spoofProvider")) {
+            if (!json["spoofProvider"].is_null() && json["spoofProvider"].is_string() && json["spoofProvider"] != "") {
+                spoofProvider = stoi(json["spoofProvider"].get<std::string>());
+                if (verboseLogs > 0) LOGD("Spoofing Keystore Provider set to %d!", spoofProvider);
+            } else {
+                LOGD("Error parsing spoofProvider!");
+            }
+            json.erase("spoofProvider");
+        }
+        if (json.contains("spoofSignature")) {
+            if (!json["spoofSignature"].is_null() && json["spoofSignature"].is_string() && json["spoofSignature"] != "") {
+                spoofSignature = stoi(json["spoofSignature"].get<std::string>());
+                if (verboseLogs > 0) LOGD("Spoofing ROM Signature set to %d!", spoofSignature);
+            } else {
+                LOGD("Error parsing spoofSignature!");
+            }
+            json.erase("spoofSignature");
         }
 
         std::vector<std::string> eraseKeys;
@@ -244,8 +286,8 @@ private:
         env->CallStaticVoidMethod(entryClass, receiveJson, javaStr);
 
         LOGD("JNI: Calling init");
-        auto entryInit = env->GetStaticMethodID(entryClass, "init", "(I)V");
-        env->CallStaticVoidMethod(entryClass, entryInit, verboseLogs);
+        auto entryInit = env->GetStaticMethodID(entryClass, "init", "(IIII)V");
+        env->CallStaticVoidMethod(entryClass, entryInit, verboseLogs, spoofBuild, spoofProvider, spoofSignature);
     }
 };
 
