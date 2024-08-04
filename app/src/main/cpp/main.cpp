@@ -188,7 +188,7 @@ private:
     void readJson() {
         LOGD("JSON contains %d keys!", static_cast<int>(json.size()));
 
-        // Verbose logging
+        // Verbose logging level
         if (json.contains("verboseLogs")) {
             if (!json["verboseLogs"].is_null() && json["verboseLogs"].is_string() && json["verboseLogs"] != "") {
                 verboseLogs = stoi(json["verboseLogs"].get<std::string>());
@@ -203,7 +203,7 @@ private:
         if (json.contains("spoofBuild")) {
             if (!json["spoofBuild"].is_null() && json["spoofBuild"].is_string() && json["spoofBuild"] != "") {
                 spoofBuild = stoi(json["spoofBuild"].get<std::string>());
-                if (verboseLogs > 0) LOGD("Spoofing Build Fields set to %d!", spoofBuild);
+                if (verboseLogs > 0) LOGD("Spoofing Build Fields enabled!", spoofBuild);
             } else {
                 LOGD("Error parsing spoofBuild!");
             }
@@ -212,7 +212,7 @@ private:
         if (json.contains("spoofProps")) {
             if (!json["spoofProps"].is_null() && json["spoofProps"].is_string() && json["spoofProps"] != "") {
                 spoofProps = stoi(json["spoofProps"].get<std::string>());
-                if (verboseLogs > 0) LOGD("Spoofing System Properties set to %d!", spoofProps);
+                if (verboseLogs > 0) LOGD("Spoofing System Properties enabled!", spoofProps);
             } else {
                 LOGD("Error parsing spoofProps!");
             }
@@ -221,7 +221,7 @@ private:
         if (json.contains("spoofProvider")) {
             if (!json["spoofProvider"].is_null() && json["spoofProvider"].is_string() && json["spoofProvider"] != "") {
                 spoofProvider = stoi(json["spoofProvider"].get<std::string>());
-                if (verboseLogs > 0) LOGD("Spoofing Keystore Provider set to %d!", spoofProvider);
+                if (verboseLogs > 0) LOGD("Spoofing Keystore Provider enabled!", spoofProvider);
             } else {
                 LOGD("Error parsing spoofProvider!");
             }
@@ -230,7 +230,7 @@ private:
         if (json.contains("spoofSignature")) {
             if (!json["spoofSignature"].is_null() && json["spoofSignature"].is_string() && json["spoofSignature"] != "") {
                 spoofSignature = stoi(json["spoofSignature"].get<std::string>());
-                if (verboseLogs > 0) LOGD("Spoofing ROM Signature set to %d!", spoofSignature);
+                if (verboseLogs > 0) LOGD("Spoofing ROM Signature enabled!", spoofSignature);
             } else {
                 LOGD("Error parsing spoofSignature!");
             }
