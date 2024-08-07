@@ -203,7 +203,7 @@ private:
         if (json.contains("spoofBuild")) {
             if (!json["spoofBuild"].is_null() && json["spoofBuild"].is_string() && json["spoofBuild"] != "") {
                 spoofBuild = stoi(json["spoofBuild"].get<std::string>());
-                if (verboseLogs > 0) LOGD("Spoofing Build Fields enabled!", spoofBuild);
+                if (verboseLogs > 0) LOGD("Spoofing Build Fields %s!", (spoofBuild > 0) ? "enabled" : "disabled");
             } else {
                 LOGD("Error parsing spoofBuild!");
             }
@@ -212,7 +212,7 @@ private:
         if (json.contains("spoofProps")) {
             if (!json["spoofProps"].is_null() && json["spoofProps"].is_string() && json["spoofProps"] != "") {
                 spoofProps = stoi(json["spoofProps"].get<std::string>());
-                if (verboseLogs > 0) LOGD("Spoofing System Properties enabled!", spoofProps);
+                if (verboseLogs > 0) LOGD("Spoofing System Properties %s!", (spoofProps > 0) ? "enabled" : "disabled");
             } else {
                 LOGD("Error parsing spoofProps!");
             }
@@ -221,7 +221,7 @@ private:
         if (json.contains("spoofProvider")) {
             if (!json["spoofProvider"].is_null() && json["spoofProvider"].is_string() && json["spoofProvider"] != "") {
                 spoofProvider = stoi(json["spoofProvider"].get<std::string>());
-                if (verboseLogs > 0) LOGD("Spoofing Keystore Provider enabled!", spoofProvider);
+                if (verboseLogs > 0) LOGD("Spoofing Keystore Provider %s!", (spoofProvider > 0) ? "enabled" : "disabled");
             } else {
                 LOGD("Error parsing spoofProvider!");
             }
@@ -230,7 +230,7 @@ private:
         if (json.contains("spoofSignature")) {
             if (!json["spoofSignature"].is_null() && json["spoofSignature"].is_string() && json["spoofSignature"] != "") {
                 spoofSignature = stoi(json["spoofSignature"].get<std::string>());
-                if (verboseLogs > 0) LOGD("Spoofing ROM Signature enabled!", spoofSignature);
+                if (verboseLogs > 0) LOGD("Spoofing ROM Signature %s!", (spoofSignature > 0) ? "enabled" : "disabled");
             } else {
                 LOGD("Error parsing spoofSignature!");
             }
