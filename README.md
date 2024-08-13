@@ -115,7 +115,24 @@ Add a "verboseLogs" entry with a value of "0", "1", "2", "3" or "100" to your cu
 
 ## Can this module pass MEETS_STRONG_INTEGRITY?
 
-No.
+No...
+
+## About spoofing Advanced Settings
+
+The advanced spoofing options add granular control over what exactly gets spoofed, allowing one to disable the parts that may conflict with other kinds of spoofing modules, and provide an option to work around the testkey ROM ban for those needing that feature. See more in the Details area below.
+
+<details>
+<summary><strong>Details</strong></summary>
+
+- Adding the Advanced Settings entries is best done using the migration script with the `sh migrate.sh --force --advanced` or `sh migrate.sh -f -a` command. Other than for the "verboseLogs" entry (see above), they are all 0 (disabled) or 1 (enabled).
+
+- The "spoofBuild" entry (default 1) controls spoofing the Build Fields from the fingerprint; the "spoofProps" entry (default 1) controls spoofing the System Properties from the fingerprint; the "spoofProvider" entry (default 1) controls spoofing the Keystore Provider, and the "spoofSignature" entry (default 0) controls spoofing the ROM Signature.
+
+- For spoofing locked bootloader and attempting to pass Play Integrity STRONG verdict I recommend using my [Tricky Store v1.0.3-mod](https://github.com/osm0sis/TrickyStore) fork builds, though the last [official](https://github.com/5ec1cff/TrickyStore) build with spoof_build_vars disabled (i.e. file deleted) will also work.
+
+- Note: Using Tricky Store to achieve STRONG integrity (with an unrevoked hardware keybox.xml) requires the Advanced Settings "spoofProps" and "spoofProvider" disabled, but to achieve DEVICE integrity (with Tricky Store default AOSP software keybox.xml or a revoked keybox.xml) requires at least "spoofProps" enabled, and some fingerprints may also require "spoofProvider".  More known working private fingerprints can achieve DEVICE integrity using these Advanced Settings in conjunction with Tricky Store than is possible with Tricky Store alone since they require fingerprint props spoofing.
+
+</details>
 
 ## About Scripts-only mode
 
