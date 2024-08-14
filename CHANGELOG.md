@@ -8,12 +8,13 @@
 - Add granular spoofing Advanced Settings for use with Tricky Store
 - Improve migrate and autopif scripts to retain Advanced Settings values
 - Improve autopif script to catch Magisk Canary busybox wget regression
+- Fix bootloop on some Xiaomi devices
 
 ## Custom Fork v9
-- Improve migrate script handling of some formatting edge cases
-- Add migrate script manual option to override all values using the fingerprint values
-- Add an opt-in scripts-only-mode for Android <10 ROMs
-- Add autopif script to allow extracting the latest Xiaomi.eu custom.pif.json values
+- Improve migrate script formatting edge cases
+- Add migrate script manual option to override all values using fingerprint values
+- Add opt-in Scripts-only mode for Android <10
+- Add autopif script to allow extracting latest Xiaomi.eu custom.pif.json values
 - Add killgms script to allow manual DroidGuard process killing
 
 _[Previous changelogs](https://github.com/osm0sis/PlayIntegrityFork/releases)_
