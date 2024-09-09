@@ -92,7 +92,8 @@ Note: Some modules which modify system (e.g. Xposed) can trigger DroidGuard dete
 ### Failing DEVICE verdict (on custom ROM)
 
 - Check the ROM signing keys with command `adb shell unzip -l /system/etc/security/otacerts.zip` or `unzip -l /system/etc/security/otacerts.zip`
-- If the output shows the ROM is signed with the AOSP testkey then inform your ROM maintainer to start signing their builds with a private key for their next build and ideally also provide a ROM signature migration build to allow you to update to it without requiring a data wipe
+- If the output shows the ROM is signed with the AOSP testkey then inform your ROM maintainer to start signing their builds with a private key for their next build and ideally also provide a ROM signature migration build to allow users to update to it without requiring a data wipe
+- There is an experimental advanced feature to attempt to work around this by spoofing the ROM signature in Package Manager, see the spoofing Advanced Settings section below
 - You may also try a different custom ROM, or go back to the stock ROM for your device, if available/possible
 
 ### Failing Play Protect/Store Certification and/or Google Wallet Tap To Pay Setup Security Requirements
