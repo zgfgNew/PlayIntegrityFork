@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 #include "zygisk.hpp"
-#include "json.hpp"
+#include "json/single_include/nlohmann/json.hpp"
 #include "dobby.h"
 
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "PIF/Native", __VA_ARGS__)
