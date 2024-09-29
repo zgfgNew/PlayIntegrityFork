@@ -131,7 +131,7 @@ The advanced spoofing options add granular control over what exactly gets spoofe
 
 - For spoofing locked bootloader and attempting to pass Play Integrity STRONG verdict I only recommend using the latest official [Tricky Store](https://github.com/5ec1cff/TrickyStore) build.
 
-- Note: Using Tricky Store to achieve STRONG integrity (with an unrevoked hardware keybox.xml) requires the Advanced Settings "spoofProvider" (and possibly "spoofProps") disabled, but to achieve DEVICE integrity (with Tricky Store default AOSP software keybox.xml or a revoked keybox.xml) requires at least "spoofProps" enabled, and some fingerprints may also require "spoofProvider".  More known working private fingerprints can achieve DEVICE integrity using these Advanced Settings in conjunction with Tricky Store than was possible with Tricky Store alone since they require fingerprint props spoofing.
+- Note: Using Tricky Store to achieve STRONG integrity (with an unrevoked hardware keybox.xml) requires the Advanced Settings "spoofProvider" disabled and either "spoofProps" disabled or the "*.security_patch" entry commented out, but to achieve DEVICE integrity (with Tricky Store default AOSP software keybox.xml or a revoked keybox.xml) requires at least "spoofProps" enabled, and some fingerprints may also require "spoofProvider". More known working private fingerprints can achieve DEVICE/STRONG integrity on more devices using these Advanced Settings in conjunction with Tricky Store than was possible with Tricky Store alone since they require fingerprint props spoofing.
 
 </details>
 
