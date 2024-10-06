@@ -26,7 +26,7 @@ You can fill out the included template [example.pif.json](https://raw.githubuser
 
 Note this is just a template with the current suggested defaults, but with this fork you can include as few or as many android.os.Build class fields and Android system properties as needed to pass DEVICE verdict now and in the future if the enforced checks by Play Integrity change.
 
-As a general rule you can't use values from recent devices due to them only being allowed with full hardware backed attestation. A script to extract the latest Xiaomi.eu public fingerprint is included with the module; see the autopif section below for usage and caveats, and see the Resources below for information and scripts to help find a working private fingerprint.
+As a general rule you can't use values from recent devices due to them only being allowed with full hardware backed attestation. A script to extract the latest Pixel Beta fingerprint is included with the module; see the autopif section below for usage and caveats, and see the Resources below for information and scripts to help find a working private fingerprint.
 
 Older formatted custom.pif.json files from cross-forks and previous releases will be automatically migrated to the latest format. Simply ensure the filename is custom.pif.json and place it in the module directory before upgrading.
 
@@ -46,6 +46,7 @@ A migration may also be performed manually with `sh migrate.sh` and custom.pif.j
 
 - Scripts:
   - [gen_pif_custom.sh](https://xdaforums.com/t/tools-zips-scripts-osm0sis-odds-and-ends-multiple-devices-platforms.2239421/post-89173470) - Script to generate a custom.pif.json from device dump build.prop files
+  - [autopif.sh](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89233630) - Script to extract the latest working Xiaomi.eu public fingerprint (though frequently banned and may be banned for RCS use while otherwise passing) to test an initial setup
   - [pif-test-json-file.sh](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89561228) - Script to automate generating and testing json files to attempt to find working fingerprints 
   - [install-random-fp.sh](https://xdaforums.com/t/script-for-randomly-installing-custom-device-fingerprints.4647408/) - Script to randomly switch between multiple working fingerprints found by the user
 
@@ -55,13 +56,13 @@ A migration may also be performed manually with `sh migrate.sh` and custom.pif.j
 
 You can customize the included default [example.app_replace.list](https://raw.githubusercontent.com/osm0sis/PlayIntegrityFork/main/module/example.app_replace.list) from the module directory (/data/adb/modules/playintegrityfix) then rename it to custom.app_replace.list to systemlessly replace any additional conflicting custom ROM spoof injection app paths to disable them.
 
-## About 'autopif.sh' and 'killgms.sh' script files
+## About 'autopif2.sh' and 'killgms.sh' script files
 
-There's intentionally no pif.json in the module because the goal remains to be futureproof, and including something that may be banned and obsolete within days would be contrary to that goal. If you don't care to have your own private fingerprint to use or don't have time to look for one currently then simply run the extraction script from a root prompt with `sh autopif.sh` in the module directory (/data/adb/modules/playintegrityfix), or from a file explorer app that supports script execution.
+There's intentionally no pif.json in the module because the goal remains to be futureproof, and including something that may be banned and obsolete within days would be contrary to that goal. If you don't care to have your own private fingerprint to use or don't have time to look for one currently then simply run the generation script from a root manager app that supports the module Action button, a root prompt with `sh autopif2.sh` in the module directory (/data/adb/modules/playintegrityfix), or from a file explorer app that supports script execution.
 
-The autopif script extracts the latest working Xiaomi.eu fingerprint (though frequently banned and may be banned for RCS use while otherwise passing Play Integrity and SafetyNet) ideally to test an initial setup.
+The autopif2 script generates a random device fingerprint from the latest Pixel Beta, ideally only to test an initial setup, since they expire roughly every 6 weeks from the Pixel Beta release date (dates included in the generated fingerprint), and the public mass-used ones from other modules or ROMs may also get banned or may be banned for RCS use while otherwise passing Play Integrity and SafetyNet in that time.
 
-The killgms script forces the Google Play Services DroidGuard process (com.google.android.gms.unstable) to end, making it restart with the next attestation attempt; useful for testing out different private fingerprints without requiring a reboot in between.
+The killgms script forces the Google Play Services DroidGuard process (com.google.android.gms.unstable) to end, making it restart with the next attestation attempt; useful for testing out different fingerprints without requiring a reboot in between.
 
 ## Troubleshooting
 
