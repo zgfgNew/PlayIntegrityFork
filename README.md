@@ -157,4 +157,6 @@ An advanced feature intended for older Android <10 ROMs, mostly stock ROMs or th
 
 ## Credits
 
-Module scripts were adapted from those of kdrag0n/Displax's Universal SafetyNet Fix (USNF) module, please see the commit history of [Displax's USNF Fork](https://github.com/Displax/safetynet-fix/tree/dev/magisk) for proper attribution.
+Original concept and general mechanism of PIF were from kdrag0n's [ProtonAOSP](https://protonaosp.org/) and [Universal SafetyNet Fix (USNF)](https://github.com/kdrag0n/safetynet-fix) projects.
+
+Module scripts were adapted from those of Displax's Universal SafetyNet Fix (USNF) MOD module, please see the commit history of [Displax's USNF MOD Fork](https://github.com/Displax/safetynet-fix/tree/dev/magisk) for proper attribution.
