@@ -136,10 +136,6 @@ The advanced spoofing options add granular control over what exactly gets spoofe
 
 </details>
 
-## About Skipping Property Deletion
-
-An advanced feature (unrelated to Play Integrity) intended for those who also need to use apps which detect prop tampering. To avoid triggering these detections by skipping any `resetprop --delete` commands in the module scripts, manually opt-in by creating a file named skipdelprop in the module directory, either from a root prompt with `touch /data/adb/modules/playintegrityfix/skipdelprop` or from a file explorer app, after the module is already installed, then reboot.
-
 ## About Scripts-only mode
 
 An advanced feature intended for older Android <10 ROMs, mostly stock ROMs or those with stock-like values, (and some other rare special cases), since they generally only need a few prop changes to pass Play Integrity DEVICE verdict. Due to this the majority of the previous information does not apply to or contradicts that of Scripts-only mode, so to avoid confusion it's contained in the Details area below.
@@ -154,6 +150,10 @@ An advanced feature intended for older Android <10 ROMs, mostly stock ROMs or th
 - For best results, you should still most likely enable Magisk's Enforce DenyList option if NOT also using [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases) or [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant). The module will automatically add the Google Play Services DroidGuard process (com.google.android.gms.unstable) to the Magisk DenyList, if missing, since for Scripts-only mode it's necessary on some configurations (generally Android 9).
 
 </details>
+
+## About skipping property deletion
+
+An advanced feature (unrelated to Play Integrity) intended for those who also need to use apps which detect prop tampering. To avoid triggering these detections by skipping any `resetprop --delete` commands in the module scripts, manually opt-in by creating a file named skipdelprop in the module directory after installation, either from a root prompt with `touch /data/adb/modules/playintegrityfix/skipdelprop` or from a file explorer app, then reboot.
 
 ## About Play Integrity (SafetyNet is deprecated)
 
