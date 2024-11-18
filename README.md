@@ -126,7 +126,7 @@ The advanced spoofing options add granular control over what exactly gets spoofe
 <details>
 <summary><strong>Details</strong></summary>
 
-- Adding the Advanced Settings entries is best done using the migration script with the `sh migrate.sh --force --advanced` or `sh migrate.sh -f -a` command. Other than for the "verboseLogs" entry (see above), they are all 0 (disabled) or 1 (enabled).
+- Adding the Advanced Settings entries is best done using the migration script with the `sh migrate.sh --force --advanced` or `sh migrate.sh -f -a` command. They may also be added on initial setups using the `sh autopif2.sh --advanced` or `sh autopif2.sh -a` command or configured directly for Tricky Store to achieve STRONG integrity (see below) with the `sh autopif2.sh --strong` or `sh autopif2.sh -s` command. Other than for the "verboseLogs" entry (see above), they are all 0 (disabled) or 1 (enabled).
 
 - The "spoofBuild" entry (default 1) controls spoofing the Build Fields from the fingerprint; the "spoofProps" entry (default 1) controls spoofing the System Properties from the fingerprint; the "spoofProvider" entry (default 1) controls spoofing the Keystore Provider, and the "spoofSignature" entry (default 0) controls spoofing the ROM Signature.
 
@@ -135,6 +135,10 @@ The advanced spoofing options add granular control over what exactly gets spoofe
 - Note: Using Tricky Store to achieve STRONG integrity (with an unrevoked hardware keybox.xml) requires the Advanced Settings "spoofProvider" disabled and either "spoofProps" disabled or the "*.security_patch" entry commented out, but to achieve DEVICE integrity (with Tricky Store default AOSP software keybox.xml or a revoked keybox.xml) requires at least "spoofProps" enabled, and some fingerprints may also require "spoofProvider". More known working private fingerprints can achieve DEVICE/STRONG integrity on more devices using these Advanced Settings in conjunction with Tricky Store than was possible with Tricky Store alone since they require fingerprint props spoofing.
 
 </details>
+
+## About Skipping Property Deletion
+
+An advanced feature (unrelated to Play Integrity) intended for those who also need to use apps which detect prop tampering. To avoid triggering these detections by skipping any `resetprop --delete` commands in the module scripts, manually opt-in by creating a file named skipdelprop in the module directory, either from a root prompt with `touch /data/adb/modules/playintegrityfix/skipdelprop` or from a file explorer app, after the module is already installed, then reboot.
 
 ## About Scripts-only mode
 
