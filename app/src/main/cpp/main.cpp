@@ -32,13 +32,6 @@ static void modify_callback(void *cookie, const char *name, const char *value, u
 
     std::string prop(name);
 
-    // Spoof specific property values
-    if (prop == "init.svc.adbd") {
-        value = "stopped";
-    } else if (prop == "sys.usb.state") {
-        value = "mtp";
-    }
-
     if (jsonProps.count(prop)) {
         // Exact property match
         value = jsonProps[prop].c_str();
