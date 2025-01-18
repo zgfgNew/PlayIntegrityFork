@@ -6,7 +6,7 @@
 [![GitHub Releases](https://img.shields.io/github/downloads/osm0sis/PlayIntegrityFork/latest/total?label=Downloads%20%28Latest%20Release%29&color=blue&style=flat)](https://github.com/osm0sis/PlayIntegrityFork/releases/latest)
 [![GitHub All Releases](https://img.shields.io/github/downloads/osm0sis/PlayIntegrityFork/total?label=Total%20Downloads%20%28All%20Releases%29&color=brightgreen&style=flat)](https://github.com/osm0sis/PlayIntegrityFork/releases)
 
-A Zygisk module which fixes "ctsProfileMatch" (SafetyNet) and "MEETS_DEVICE_INTEGRITY" (Play Integrity).
+A Zygisk module which fixes "ctsProfileMatch" (SafetyNet) and "MEETS_DEVICE_INTEGRITY" for "legacyDeviceRecognitionVerdict" (Play Integrity).
 
 To use this module you must have one of the following (latest versions):
 
@@ -67,6 +67,8 @@ The killgms script forces the Google Play Services DroidGuard process (com.googl
 ## Troubleshooting
 
 Make sure Google Play Services (com.google.android.gms) is NOT on the Magisk DenyList if Enforce DenyList is enabled since this interferes with the module; the module does prevent this using scripts but it only happens once during each reboot.
+
+Note: The below verdicts are all referring to the legacyDeviceRecognitionVerdict Play Integrity API, not the newer deviceRecognitionVerdict (which relies on locked bootloader checks to pass even DEVICE verdict).
 
 ### Failing BASIC verdict
 
@@ -132,7 +134,7 @@ The advanced spoofing options add granular control over what exactly gets spoofe
 
 - For spoofing locked bootloader and attempting to pass Play Integrity STRONG verdict I only recommend using the latest official [Tricky Store](https://github.com/5ec1cff/TrickyStore) build.
 
-- Note: Using Tricky Store to achieve STRONG integrity (with an unrevoked hardware keybox.xml) requires the Advanced Settings "spoofProvider" disabled and either "spoofProps" disabled or the "*.security_patch" entry commented out, but to achieve DEVICE integrity (with Tricky Store default AOSP software keybox.xml or a revoked keybox.xml) requires at least "spoofProps" enabled, and some fingerprints may also require "spoofProvider". More known working private fingerprints can achieve DEVICE/STRONG integrity on more devices using these Advanced Settings in conjunction with Tricky Store than was possible with Tricky Store alone since they require fingerprint props spoofing.
+- Note: Using Tricky Store to achieve STRONG Legacy integrity (with an unrevoked hardware keybox.xml) requires the Advanced Settings "spoofProvider" disabled and either "spoofProps" disabled or the "*.security_patch" entry commented out, but to achieve DEVICE Legacy integrity (with Tricky Store default AOSP software keybox.xml or a revoked keybox.xml) requires at least "spoofProps" enabled, and some fingerprints may also require "spoofProvider". More known working private fingerprints can achieve DEVICE/STRONG Legacy integrity on more devices using these Advanced Settings in conjunction with Tricky Store than was possible with Tricky Store alone since they require fingerprint props spoofing.
 
 </details>
 
@@ -163,4 +165,4 @@ An advanced feature (unrelated to Play Integrity) intended for those who also ne
 
 Original concept and general mechanism of PIF were from kdrag0n's [ProtonAOSP](https://protonaosp.org/) and [Universal SafetyNet Fix (USNF)](https://github.com/kdrag0n/safetynet-fix) projects.
 
-Module scripts were adapted from those of Displax's Universal SafetyNet Fix (USNF) MOD module, please see the commit history of [Displax's USNF MOD Fork](https://github.com/Displax/safetynet-fix/tree/dev/magisk) for proper attribution.
+Module scripts were adapted from those of Displax's forked Universal SafetyNet Fix (USNF MOD) module, please see the commit history of [Displax's USNF MOD](https://github.com/Displax/safetynet-fix/tree/dev/magisk) for proper attribution.
