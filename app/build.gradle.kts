@@ -63,7 +63,7 @@ android {
 
 dependencies {
     implementation("org.lsposed.libcxx:libcxx:27.0.12077973")
-    implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
+    implementation("org.lsposed.hiddenapibypass:hiddenapibypass:6.0")
 }
 
 tasks.register("copyFiles") {
