@@ -68,7 +68,7 @@ The killpi script forces the Google Play Services DroidGuard (com.google.android
 
 Make sure Google Play Services (com.google.android.gms) is NOT on the Magisk DenyList if Enforce DenyList is enabled since this interferes with the module; the module does prevent this using scripts but it only happens once during each reboot.
 
-Note: The below verdicts are all referring to the legacyDeviceRecognitionVerdict Play Integrity API, not the newer deviceRecognitionVerdict (which relies on locked bootloader checks to pass even DEVICE verdict).
+Note: The below verdicts are all referring to the legacyDeviceRecognitionVerdict Play Integrity API, not the newer deviceRecognitionVerdict on Android 13+ (which relies on locked bootloader checks to pass even DEVICE verdict).
 
 ### Failing BASIC verdict
 
