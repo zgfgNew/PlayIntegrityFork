@@ -1,19 +1,23 @@
-## Custom Fork v12
-- Add support to autopif2 for generating from Pixel Beta point releases
-- Improve autopif2 by catching more unsupported/broken environments
-- Improve migrate parsing lines with comments
-- Update default/example app replace list for helluvaOS
-- Fix retaining disabled non-system ROM apps on KSU/APatch
-- Add autopif2 --strong arg for initial setup with Tricky Store
-- Add skipping resetprop --delete to avoid app detections if skipdelprop file exists
+## Custom Fork v13
 
-## Custom Fork v11
-- Improve autopif busybox tests, default api_level 32, pass --advanced arg
-- Improve scripts for special configs with Tricky Store
-- Fix resetprop fallback Magisk check
-- Add Action button support to run autopif in root managers
-- Fix root check for Termux/KSU/APatch
-- Improve PixelPropsUtils workaround on more setups
-- Replace autopif with autopif2 to generate a random print from latest Pixel Beta
+- Improve Action on KSU/APatch, KSU-Next, MMRL
+- Improve autopif2 to ignore Preview builds by default
+- Remove unnecessary adb props spoof
+- Add all known opt-out props for PPU/PIH variants/hybrids
+- Add new verified boot error props deletion
+- Update killgms to killpi by adding vending
+- Improve autopif2 to populate TS's optional security_patch.txt
+- Improve ROM overlay xml disabling support
+- Improve autopif2 for wget2 on arm
+- Improve Action to use Platform Preview builds
+
+## Custom Fork v12
+- Improve autopif2 to generate from Pixel Beta point releases
+- Improve autopif2 to catch more broken environments
+- Improve migrate parsing lines with comments
+- Update default app replace list for helluvaOS
+- Fix retaining replaced non-system ROM apps on KSU/APatch
+- Add autopif2 --strong for initial setup with TS
+- Add skipping prop deletion to avoid app detections if skipdelprop file exists
 
 _[Previous changelogs](https://github.com/osm0sis/PlayIntegrityFork/releases)_
