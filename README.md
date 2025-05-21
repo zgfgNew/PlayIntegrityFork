@@ -6,7 +6,7 @@
 [![GitHub Releases](https://img.shields.io/github/downloads/osm0sis/PlayIntegrityFork/latest/total?label=Downloads%20%28Latest%20Release%29&color=blue&style=flat)](https://github.com/osm0sis/PlayIntegrityFork/releases/latest)
 [![GitHub All Releases](https://img.shields.io/github/downloads/osm0sis/PlayIntegrityFork/total?label=Total%20Downloads%20%28All%20Releases%29&color=brightgreen&style=flat)](https://github.com/osm0sis/PlayIntegrityFork/releases)
 
-A Zygisk module which fixes "MEETS_DEVICE_INTEGRITY" for "legacyDeviceRecognitionVerdict" or Android <13 "deviceRecognitionVerdict" in the Play Integrity API.
+A Zygisk module which fixes "MEETS_DEVICE_INTEGRITY" for Android <13 "deviceRecognitionVerdict" with the Play Integrity API.
 
 To use this module you must have one of the following (latest versions):
 
@@ -71,11 +71,11 @@ The killpi script forces the Google Play Services DroidGuard (com.google.android
 
 Make sure Google Play Services (com.google.android.gms) is NOT on the Magisk DenyList if Enforce DenyList is enabled since this interferes with the module; the module does prevent this using scripts but it only happens once during each reboot.
 
-Note: The below verdicts are all referring to the legacyDeviceRecognitionVerdict or Android <13 deviceRecognitionVerdict Play Integrity API, not the Android 13+ deviceRecognitionVerdict (which relies on locked bootloader checks to pass even DEVICE verdict).
+Note: The below verdicts are all referring to the Android <13 deviceRecognitionVerdict Play Integrity API, not the Android 13+ deviceRecognitionVerdict (which relies on locked bootloader checks to pass even DEVICE verdict).
 
 ### Failing BASIC verdict
 
-If you are failing MEETS_BASIC_INTEGRITY (Play Integrity) something is wrong in your setup. Recommended steps in order to find the problem:
+If you are failing MEETS_BASIC_INTEGRITY something is wrong in your setup. Recommended steps in order to find the problem:
 
 - Disable all modules except this one
 - Try a different (ideally known working) custom.pif.json
@@ -137,13 +137,13 @@ The advanced spoofing options add granular control over what exactly gets spoofe
 
 - For spoofing locked bootloader and attempting to pass Play Integrity <A13 STRONG or A13+ DEVICE or STRONG verdict I only recommend using the latest official [Tricky Store](https://github.com/5ec1cff/TrickyStore) build.
 
-- Note: Using Tricky Store to achieve <A13 STRONG or A13+ DEVICE or STRONG integrity (with an unrevoked hardware keybox.xml) requires the Advanced Settings "spoofProvider" disabled and the "*.security_patch" entry commented out (unless spoofing a matching OS Patch Level with system= or all= in Tricky Store's security_patch.txt; autopif2 will do this automatically if security_patch.txt exists in the Tricky Store directory), but to achieve Legacy/<A13 DEVICE integrity (with Tricky Store default AOSP software keybox.xml) requires at least "spoofProps" enabled, and some fingerprints may also require "spoofProvider". More known working private fingerprints can achieve Legacy/<A13 DEVICE/STRONG integrity on more devices using these Advanced Settings in conjunction with Tricky Store than was possible with Tricky Store alone since they require fingerprint props spoofing.
+- Note: Using Tricky Store to achieve <A13 STRONG or A13+ DEVICE or STRONG integrity (with an unrevoked hardware keybox.xml) requires the Advanced Settings "spoofProvider" disabled and the "*.security_patch" entry commented out (unless spoofing a matching OS Patch Level with system= or all= in Tricky Store's security_patch.txt; autopif2 will do this automatically if security_patch.txt exists in the Tricky Store directory), but to achieve <A13 DEVICE integrity (with Tricky Store default AOSP software keybox.xml) requires at least "spoofProps" enabled, and some fingerprints may also require "spoofProvider". More known working private fingerprints can achieve <A13 DEVICE/STRONG integrity on more devices using these Advanced Settings in conjunction with Tricky Store than was possible with Tricky Store alone since they require fingerprint props spoofing.
 
 </details>
 
 ## About Scripts-only mode
 
-An advanced feature intended for older Android <10 ROMs, mostly stock ROMs or those with stock-like values, (and some other rare special cases), since they generally only need a few prop changes to pass Play Integrity Legacy/<A13 DEVICE verdict. Due to this the majority of the previous information does not apply to or contradicts that of Scripts-only mode, so to avoid confusion it's contained in the Details area below.
+An advanced feature intended for older Android <10 ROMs, mostly stock ROMs or those with stock-like values, (and some other rare special cases), since they generally only need a few prop changes to pass Play Integrity <A13 DEVICE verdict. Due to this the majority of the previous information does not apply to or contradicts that of Scripts-only mode, so to avoid confusion it's contained in the Details area below.
 
 <details>
 <summary><strong>Details</strong></summary>
