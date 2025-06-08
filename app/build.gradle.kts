@@ -62,7 +62,7 @@ android {
 }
 
 dependencies {
-    implementation("org.lsposed.libcxx:libcxx:27.0.12077973")
+    implementation("org.lsposed.libcxx:libcxx:28.1.13356709")
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:6.1")
 }
 
