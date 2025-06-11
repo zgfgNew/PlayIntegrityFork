@@ -42,8 +42,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -68,7 +68,7 @@ dependencies {
 
 tasks.register("copyFiles") {
     val moduleFolder = project.rootDir.resolve("module")
-    val dexFile = project.layout.buildDirectory.get().asFile.resolve("intermediates/dex/release/mergeDexRelease/classes.dex")
+    val dexFile = project.layout.buildDirectory.get().asFile.resolve("intermediates/dex/release/minifyReleaseWithR8/classes.dex")
     val soDir = project.layout.buildDirectory.get().asFile.resolve("intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib")
 
     doLast {
