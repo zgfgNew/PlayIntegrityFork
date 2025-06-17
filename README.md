@@ -10,9 +10,9 @@ A Zygisk module which fixes "MEETS_DEVICE_INTEGRITY" for Android <13 "deviceReco
 
 To use this module you must have one of the following (latest versions):
 
-- [Magisk](https://github.com/topjohnwu/Magisk) with Zygisk enabled (and Enforce DenyList enabled if NOT also using [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases) or [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant), for best results)
+- [Magisk](https://github.com/topjohnwu/Magisk) with Zygisk enabled (and Enforce DenyList enabled if NOT also using [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases) or [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant) or [NoHello](https://github.com/MhmRdd/NoHello), for best results)
 - [KernelSU](https://github.com/tiann/KernelSU) with [Zygisk Next](https://github.com/Dr-TSNG/ZygiskNext) module installed
-- [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next) with [Zygisk Next](https://github.com/Dr-TSNG/ZygiskNext) module installed
+- [KernelSU Next](https://github.com/KernelSU-Next/KernelSU-Next) with [Zygisk Next](https://github.com/Dr-TSNG/ZygiskNext) module installed
 - [APatch](https://github.com/bmax121/APatch) with [Zygisk Next](https://github.com/Dr-TSNG/ZygiskNext) module installed
 
 ## About module
@@ -82,7 +82,7 @@ If you are failing MEETS_BASIC_INTEGRITY something is wrong in your setup. Recom
 
 Note: Some modules which modify system (e.g. Xposed) can trigger DroidGuard detections, as can any which hook GMS processes (e.g. custom fonts).
 
-### Failing DEVICE verdict (on KernelSU/KernelSU-Next/APatch)
+### Failing DEVICE verdict (on KernelSU/KernelSU Next/APatch)
 
 - Disable Zygisk Next
 - Reboot
@@ -133,7 +133,9 @@ The advanced spoofing options add granular control over what exactly gets spoofe
 
 - Adding the Advanced Settings entries is best done using the migration script with the `sh migrate.sh --force --advanced` or `sh migrate.sh -f -a` command. They may also be added on initial setups using the `sh autopif2.sh --advanced --preview` or `sh autopif2.sh -a -p` command or configured directly for Tricky Store to achieve <A13 STRONG or A13+ DEVICE or STRONG integrity (see below) with the `sh autopif2.sh --strong --preview` or `sh autopif2.sh -s -p` command. Other than for the "verboseLogs" entry (see above), they are all 0 (disabled) or 1 (enabled).
 
-- The "spoofBuild" entry (default 1) controls spoofing the Build Fields from the fingerprint; the "spoofProps" entry (default 1) controls spoofing the System Properties from the fingerprint; the "spoofProvider" entry (default 1) controls spoofing the Keystore Provider, and the "spoofSignature" entry (default 0) controls spoofing the ROM Signature.
+- The "spoofBuild" entry (default 1) controls spoofing the Build Fields from the fingerprint; the "spoofProps" entry (default 1) controls spoofing the System Properties from the fingerprint; the "spoofProvider" entry (default 1) controls spoofing the Keystore Provider; the "spoofSignature" entry (default 0) controls spoofing the ROM Signature, and the "spoofVendingSdk" entry (default 0) controls spoofing ROM SDK_INT/sdkVersion 32 to the Play Store (com.android.vending) to force Play Integrity to use the <A13 verdicts.
+
+- Leaving spoofVendingSdk enabled is NOT recommended, it [will break](https://github.com/osm0sis/PlayIntegrityFork/pull/30) the behavior of the Play Store to some extent (back gesture/navbar button for all, account sign-in and downloads for higher original ROM SDK_INT) and could have other unintended effects like incorrect app variants being served, crashes, etc. One possible use case is with the [spoofVendingSdk QSTile](https://xdaforums.com/t/tricky-store-bootloader-keybox-spoofing.4683446/post-90118016) Tasker App to quickly toggle it on only as needed, then toggle it off again afterward.
 
 - For spoofing locked bootloader and attempting to pass Play Integrity <A13 STRONG or A13+ DEVICE or STRONG verdict I only recommend using the latest official [Tricky Store](https://github.com/5ec1cff/TrickyStore) build.
 
@@ -168,6 +170,8 @@ An advanced feature (unrelated to Play Integrity) intended for those who also ne
 
 ## Credits
 
-Original concept and general mechanism of PIF were from kdrag0n's [ProtonAOSP](https://protonaosp.org/) and [Universal SafetyNet Fix (USNF)](https://github.com/kdrag0n/safetynet-fix) projects.
+Forked from chiteroman's [Play Integrity Fix (PIF)](https://github.com/chiteroman/PlayIntegrityFix) (no longer online).
 
-Module scripts were adapted from those of Displax's forked Universal SafetyNet Fix (USNF MOD) module, please see the commit history of [Displax's USNF MOD](https://github.com/Displax/safetynet-fix/tree/dev/magisk) for proper attribution.
+Original concept and general mechanism of PIF from kdrag0n's [ProtonAOSP](https://protonaosp.org/) and [Universal SafetyNet Fix (USNF)](https://github.com/kdrag0n/safetynet-fix) projects.
+
+Module scripts adapted from those of Displax's forked Universal SafetyNet Fix (USNF MOD) module; please see the commit history of [Displax's USNF MOD](https://github.com/Displax/safetynet-fix/tree/dev/magisk) for proper attribution.
