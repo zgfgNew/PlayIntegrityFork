@@ -31,7 +31,7 @@ android {
                 arguments += "-DANDROID_STL=none"
                 arguments += "-DCMAKE_BUILD_TYPE=Release"
 
-                cppFlags += "-std=c++20"
+                cppFlags += "-std=c++23"
                 cppFlags += "-fno-exceptions"
                 cppFlags += "-fno-rtti"
                 cppFlags += "-fvisibility=hidden"
