@@ -77,7 +77,7 @@ The killpi script forces the Google Play Services DroidGuard (com.google.android
 
 Make sure Google Play Services (com.google.android.gms) is NOT on the Magisk DenyList if Enforce DenyList is enabled since this interferes with the module; the module does prevent this using scripts but it only happens once during each reboot.
 
-Note: To test <A13 PI verdicts on an A13+ ROM the spoofVendingSdk option in the custom.pif.json Advanced Settings must be temporarily enabled. Play Store must be fully set up before (and data not cleared during) enabling spoofVendingSdk or it and PI checks will only crash/hang, see the spoofing Advanced Settings section below.
+Note: To test <A13 PI verdicts on an A13+ ROM the spoofVendingSdk option in the custom.pif.json Advanced Settings must be temporarily enabled. See the spoofing Advanced Settings section below.
 
 ### Failing BASIC integrity
 
@@ -153,11 +153,11 @@ The advanced spoofing options add granular control over what exactly gets spoofe
 <details>
 <summary><strong>Details</strong></summary>
 
-- Adding the Advanced Settings entries are present by default from autopif2 or migrate (during installation), but may be added to any fingerprint by running migrate.sh with the `-f -a` or `--force --advanced` arguments in a file explorer app or with `sh migrate.sh --force --advanced` in a root shell. They may also be configured directly for Tricky Store to achieve <A13 PI STRONG or A13+ PI DEVICE/STRONG integrity (see below) by running autopif2.sh with the `-s -p` or `--strong --preview` arguments in a file explorer app or with `sh autopif2.sh --strong --preview` in a root shell. Other than for the "verboseLogs" entry (see above), they are all 0 (disabled) or 1 (enabled).
+- The Advanced Settings entries are present by default from autopif2 or migrate (during installation), but may be added to any fingerprint by running migrate.sh with the `-f -a` or `--force --advanced` arguments in a file explorer app or with `sh migrate.sh --force --advanced` in a root shell. They may also be configured directly for Tricky Store to achieve <A13 PI STRONG or A13+ PI DEVICE/STRONG integrity (see below) by running autopif2.sh with the `-s -p` or `--strong --preview` arguments in a file explorer app or with `sh autopif2.sh --strong --preview` in a root shell. Other than for the "verboseLogs" entry (see above), they are all 0 (disabled) or 1 (enabled).
 
 - The "spoofBuild" entry (default 1) controls spoofing the Build Fields from the fingerprint; the "spoofProps" entry (default 1) controls spoofing the System Properties from the fingerprint; the "spoofProvider" entry (default 1) controls spoofing the Keystore Provider; the "spoofSignature" entry (default 0) controls spoofing the ROM Signature, and the "spoofVendingSdk" entry (default 0) controls spoofing ROM SDK_INT/sdkVersion 32 to the Play Store (com.android.vending) to force Play Integrity to use the <A13 PI verdicts.
 
-- Leaving spoofVendingSdk enabled is NOT recommended, it [will break](https://github.com/osm0sis/PlayIntegrityFork/pull/30) the behavior of the Play Store to some extent (back gesture/navbar button for all, account sign-in and downloads for higher original ROM SDK_INT) and could have other unintended effects like incorrect app variants being served, crashes, etc. One possible use case is with the [spoofVendingSdk QSTile](https://xdaforums.com/t/tricky-store-bootloader-keybox-spoofing.4683446/post-90118016) Tasker App to quickly toggle it on only as needed, then toggle it off again afterward.
+- Leaving spoofVendingSdk enabled is NOT recommended, it [will break](https://github.com/osm0sis/PlayIntegrityFork/pull/30) the behavior of the Play Store to some extent (back gesture/navbar button for all, account sign-in and downloads for higher original ROM SDK_INT) and could have other unintended effects like incorrect app variants being served, crashes, etc. Play Store must be fully set up before (and data not cleared during) enabling spoofVendingSdk or it and PI checks will only crash/hang. One possible use case is with the [spoofVendingSdk QSTile](https://xdaforums.com/t/tricky-store-bootloader-keybox-spoofing.4683446/post-90118016) Tasker App to quickly toggle it on only as needed, then toggle it off again afterward.
 
 - For spoofing locked bootloader and attempting to pass <A13 PI STRONG integrity, or A13+ PI DEVICE or STRONG integrity I only recommend using the latest official [Tricky Store](https://github.com/5ec1cff/TrickyStore) build.
 
