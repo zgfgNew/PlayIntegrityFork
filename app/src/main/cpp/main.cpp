@@ -20,6 +20,7 @@ static int spoofBuild = 1;
 static int spoofProps = 1;
 static int spoofProvider = 1;
 static int spoofSignature = 0;
+static int spoofVendingFingerprint = 0;
 static int spoofVendingSdk = 0;
 
 static std::map<std::string, std::string> jsonProps;
@@ -166,10 +167,10 @@ public:
         readJson();
 
         if (pkgName == VENDING_PACKAGE) spoofProps = spoofBuild = spoofProvider = spoofSignature = 0;
-        else spoofVendingSdk = 0;
+        else spoofVendingFingerprint = spoofVendingSdk = 0;
 
         if (spoofProps > 0) doHook();
-        if (spoofBuild + spoofProvider + spoofSignature + spoofVendingSdk > 0) inject();
+        if (spoofBuild + spoofProvider + spoofSignature + spoofVendingFingerprint + spoofVendingSdk > 0) inject();
 
         dexVector.clear();
         json.clear();
@@ -185,6 +186,7 @@ private:
     std::vector<char> dexVector;
     nlohmann::json json;
     std::string pkgName;
+    std::string spoofFingerprintValue = "";
 
     void readJson() {
         LOGD("JSON contains %d keys!", static_cast<int>(json.size()));
@@ -209,6 +211,17 @@ private:
                 LOGD("Error parsing spoofVendingSdk!");
             }
             json.erase("spoofVendingSdk");
+        }
+        if (json.contains("spoofVendingFingerprint")) {
+            if (!json["spoofVendingFingerprint"].is_null() && json["spoofVendingFingerprint"].is_string() && json["spoofVendingFingerprint"] != "" &&
+                json.contains("FINGERPRINT") && !json["FINGERPRINT"].is_null() && json["FINGERPRINT"].is_string() && json["FINGERPRINT"] != "") {
+                spoofVendingFingerprint = stoi(json["spoofVendingFingerprint"].get<std::string>());
+                spoofFingerprintValue = json["FINGERPRINT"].get<std::string>();
+                if (verboseLogs > 0) LOGD("Spoofing Fingerprint in Play Store %s!", (spoofVendingFingerprint > 0) ? "enabled" : "disabled");
+            } else {
+                LOGD("Error parsing spoofVendingFingerprint or FINGERPRINT field!");
+            }
+            json.erase("spoofVendingFingerprint");
         }
         if (pkgName == VENDING_PACKAGE) {
             json.clear();
@@ -299,8 +312,9 @@ private:
 
         if (pkgName == VENDING_PACKAGE) {
             LOGD("JNI %s: Calling EntryPointVending.init", niceName);
-            auto entryInit = env->GetStaticMethodID(entryClass, "init", "(II)V");
-            env->CallStaticVoidMethod(entryClass, entryInit, verboseLogs, spoofVendingSdk);
+            auto entryInit = env->GetStaticMethodID(entryClass, "init", "(IIILjava/lang/String;)V");
+            auto javaStr = env->NewStringUTF(spoofFingerprintValue.c_str());
+            env->CallStaticVoidMethod(entryClass, entryInit, verboseLogs, spoofVendingFingerprint, spoofVendingSdk, javaStr);
         } else {
             LOGD("JNI %s: Sending JSON", niceName);
             auto receiveJson = env->GetStaticMethodID(entryClass, "receiveJson", "(Ljava/lang/String;)V");
