@@ -12,6 +12,7 @@
 
 #define JSON_FILE_PATH "/data/adb/modules/playintegrityfix/pif.json"
 #define CUSTOM_JSON_FILE_PATH "/data/adb/modules/playintegrityfix/custom.pif.json"
+
 #define VENDING_PACKAGE "com.android.vending"
 #define DROIDGUARD_PACKAGE "com.google.android.gms.unstable"
 
@@ -20,7 +21,7 @@ static int spoofBuild = 1;
 static int spoofProps = 1;
 static int spoofProvider = 1;
 static int spoofSignature = 0;
-static int spoofVendingFingerprint = 0;
+static int spoofVendingFinger = 0;
 static int spoofVendingSdk = 0;
 
 static std::map<std::string, std::string> jsonProps;
@@ -166,11 +167,11 @@ public:
 
         readJson();
 
-        if (pkgName == VENDING_PACKAGE) spoofProps = spoofBuild = spoofProvider = spoofSignature = 0;
-        else spoofVendingFingerprint = spoofVendingSdk = 0;
+        if (pkgName == VENDING_PACKAGE) spoofBuild = spoofProps = spoofProvider = spoofSignature = 0;
+        else spoofVendingFinger = spoofVendingSdk = 0;
 
         if (spoofProps > 0) doHook();
-        if (spoofBuild + spoofProvider + spoofSignature + spoofVendingFingerprint + spoofVendingSdk > 0) inject();
+        if (spoofBuild + spoofProvider + spoofSignature + spoofVendingFinger + spoofVendingSdk > 0) inject();
 
         dexVector.clear();
         json.clear();
@@ -186,7 +187,7 @@ private:
     std::vector<char> dexVector;
     nlohmann::json json;
     std::string pkgName;
-    std::string spoofFingerprintValue = "";
+    std::string vendingFingerprintValue;
 
     void readJson() {
         LOGD("JSON contains %d keys!", static_cast<int>(json.size()));
@@ -202,7 +203,7 @@ private:
             json.erase("verboseLogs");
         }
 
-        // Advanced spoofing settings
+        // Vending advanced spoofing settings
         if (json.contains("spoofVendingSdk")) {
             if (!json["spoofVendingSdk"].is_null() && json["spoofVendingSdk"].is_string() && json["spoofVendingSdk"] != "") {
                 spoofVendingSdk = stoi(json["spoofVendingSdk"].get<std::string>());
@@ -212,21 +213,29 @@ private:
             }
             json.erase("spoofVendingSdk");
         }
-        if (json.contains("spoofVendingFingerprint")) {
-            if (!json["spoofVendingFingerprint"].is_null() && json["spoofVendingFingerprint"].is_string() && json["spoofVendingFingerprint"] != "" &&
-                json.contains("FINGERPRINT") && !json["FINGERPRINT"].is_null() && json["FINGERPRINT"].is_string() && json["FINGERPRINT"] != "") {
-                spoofVendingFingerprint = stoi(json["spoofVendingFingerprint"].get<std::string>());
-                spoofFingerprintValue = json["FINGERPRINT"].get<std::string>();
-                if (verboseLogs > 0) LOGD("Spoofing Fingerprint in Play Store %s!", (spoofVendingFingerprint > 0) ? "enabled" : "disabled");
+        if (json.contains("spoofVendingFinger")) {
+            if (!json["spoofVendingFinger"].is_null() && json["spoofVendingFinger"].is_string() && json["spoofVendingFinger"] != "") {
+                if (json["spoofVendingFinger"].get<std::string>().find_first_not_of("01") != std::string::npos) {
+                    spoofVendingFinger = 1;
+                    vendingFingerprintValue = json["spoofVendingFinger"].get<std::string>();
+                } else if (json.contains("FINGERPRINT") && !json["FINGERPRINT"].is_null() && json["FINGERPRINT"].is_string() && json["FINGERPRINT"] != "") {
+                    spoofVendingFinger = stoi(json["spoofVendingFinger"].get<std::string>());
+                    vendingFingerprintValue = json["FINGERPRINT"].get<std::string>();
+                } else {
+                    LOGD("Error parsing spoofVendingFinger or FINGERPRINT field!");
+                }
+                if (verboseLogs > 0) LOGD("Spoofing Fingerprint in Play Store %s!", (spoofVendingFinger > 0) ? "enabled" : "disabled");
             } else {
-                LOGD("Error parsing spoofVendingFingerprint or FINGERPRINT field!");
+                LOGD("Error parsing spoofVendingFinger!");
             }
-            json.erase("spoofVendingFingerprint");
+            json.erase("spoofVendingFinger");
         }
         if (pkgName == VENDING_PACKAGE) {
             json.clear();
             return;
         }
+
+        // DroidGuard advanced spoofing settings
         if (json.contains("spoofBuild")) {
             if (!json["spoofBuild"].is_null() && json["spoofBuild"].is_string() && json["spoofBuild"] != "") {
                 spoofBuild = stoi(json["spoofBuild"].get<std::string>());
@@ -313,8 +322,9 @@ private:
         if (pkgName == VENDING_PACKAGE) {
             LOGD("JNI %s: Calling EntryPointVending.init", niceName);
             auto entryInit = env->GetStaticMethodID(entryClass, "init", "(IIILjava/lang/String;)V");
-            auto javaStr = env->NewStringUTF(spoofFingerprintValue.c_str());
-            env->CallStaticVoidMethod(entryClass, entryInit, verboseLogs, spoofVendingFingerprint, spoofVendingSdk, javaStr);
+            auto javaStr = env->NewStringUTF(vendingFingerprintValue.c_str());
+            env->CallStaticVoidMethod(entryClass, entryInit, verboseLogs, spoofVendingFinger, spoofVendingSdk, javaStr);
+            env->DeleteLocalRef(javaStr);
         } else {
             LOGD("JNI %s: Sending JSON", niceName);
             auto receiveJson = env->GetStaticMethodID(entryClass, "receiveJson", "(Ljava/lang/String;)V");
@@ -327,10 +337,10 @@ private:
             env->DeleteLocalRef(javaStr);
         }
         env->DeleteLocalRef(clClass);
-        env->DeleteLocalRef(dexClClass);
         env->DeleteLocalRef(systemClassLoader);
-        env->DeleteLocalRef(dexCl);
+        env->DeleteLocalRef(dexClClass);
         env->DeleteLocalRef(buffer);
+        env->DeleteLocalRef(dexCl);
         env->DeleteLocalRef(entryClassName);
         env->DeleteLocalRef(entryClassObj);
     }
@@ -379,8 +389,10 @@ static void companion(int fd) {
 }
 
 /*
- * - The fix is public now: https://github.com/JingMatrix/NeoZygisk/commit/76d54228c7e6fe14cca93338865008946b94f7ee
- * - Remeber to add this for all other zygisk c++ library
+ * Fix for Dobby detections
+ * Must be added to all Zygisk C++ libraries in a project
+ *
+ * Reference: https://github.com/JingMatrix/NeoZygisk/commit/76d54228c7e6fe14cca93338865008946b94f7ee
  */
 extern "C" int __cxa_atexit(void (*func)(void*), void* arg, void* dso) {
     return 0;

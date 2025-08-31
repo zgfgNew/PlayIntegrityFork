@@ -12,23 +12,23 @@ public final class EntryPointVending {
     }
 
     @SuppressLint("DefaultLocale")
-    public static void init(int verboseLogs, int spoofVendingFingerprint, int spoofVendingSdk, String spoofFingerprintValue) {
-        if (spoofVendingSdk < 1){
-            // Only spoof FINGERPRINT to Play Store if not forcing legacy verdict           
-            if (spoofVendingFingerprint < 1) return;
+    public static void init(int verboseLogs, int spoofVendingFinger, int spoofVendingSdk, String vendingFingerprintValue) {
+        // Only spoof FINGERPRINT to Play Store if not forcing Android <13 Play Integrity verdict
+        if (spoofVendingSdk < 1) {
+            if (spoofVendingFinger < 1) return;
             String oldValue;
             try {
                 Field field = Build.class.getDeclaredField("FINGERPRINT");
                 field.setAccessible(true);
                 oldValue = String.valueOf(field.get(null));
-                if (oldValue.equals(spoofFingerprintValue)) {
+                if (oldValue.equals(vendingFingerprintValue)) {
                     if (verboseLogs > 2) LOG(String.format("[FINGERPRINT]: %s (unchanged)", oldValue));
                     field.setAccessible(false);
                     return;
                 }
-                field.set(null, spoofFingerprintValue);
+                field.set(null, vendingFingerprintValue);
                 field.setAccessible(false);
-                LOG(String.format("[FINGERPRINT]: %s -> %s", oldValue, spoofFingerprintValue));
+                LOG(String.format("[FINGERPRINT]: %s -> %s", oldValue, vendingFingerprintValue));
             } catch (NoSuchFieldException e) {
                 LOG("FINGERPRINT field not found: " + e);
             } catch (SecurityException | IllegalAccessException | IllegalArgumentException |
