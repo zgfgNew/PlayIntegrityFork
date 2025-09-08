@@ -51,13 +51,11 @@ A migration may also be performed manually in the module directory with a custom
 
 - Scripts:
   - [gen_pif_custom.sh](https://xdaforums.com/t/tools-zips-scripts-osm0sis-odds-and-ends-multiple-devices-platforms.2239421/post-89173470) - Script to generate a custom.pif.json from device dump build.prop files
-  - [autopif.sh](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89233630) - Script to extract the latest working Xiaomi.eu public fingerprint (though frequently banned and may be banned for RCS use while otherwise passing) to test an initial setup
   - [pif-test-json-file.sh](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89561228) - Script to automate generating and testing json files to attempt to find working fingerprints 
   - [install-random-fp.sh](https://xdaforums.com/t/script-for-randomly-installing-custom-device-fingerprints.4647408/) - Script to randomly switch between multiple working fingerprints found by the user
 
 - Apps:
   - [FP BETA Checker](https://xdaforums.com/t/tricky-store-bootloader-keybox-spoofing.4683446/post-89754890) - Tasker App to check the estimated expiry of the Pixel Beta fingerprint and trigger autopif2.sh to update
-  - [FP XEU Checker](https://xdaforums.com/t/module-play-integrity-fix-safetynet-fix.4607985/post-89390931) - Tasker App to check for a new Xiaomi.eu public fingerprint and trigger autopif.sh to update
 
 </details>
 
