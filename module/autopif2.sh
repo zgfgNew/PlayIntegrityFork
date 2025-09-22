@@ -36,7 +36,7 @@ die() { echo "\nError: $@, install busybox!"; exit 1; }
 find_busybox() {
   [ -n "$BUSYBOX" ] && return 0;
   local path;
-  for path in /data/adb/modules/busybox-ndk/system/*/busybox /data/adb/magisk/busybox /data/adb/ksu/bin/busybox /data/adb/ap/bin/busybox; do
+  for path in /data/adb/modules/busybox-ndk/system/*/busybox /data/adb/magisk/busybox /data/adb/ksu/bin/busybox /data/adb/ap/bin/busybox $(which busybox); do
     if [ -f "$path" ]; then
       BUSYBOX="$path";
       return 0;
