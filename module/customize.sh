@@ -40,7 +40,7 @@ fi
 
 # Migrate custom.pif.json to latest defaults if needed
 if [ -f "$MODPATH/custom.pif.json" ]; then
-    if [ -z $(grep -q -e "api_level" -e "verboseLogs" -e "spoofVendingSdk" -e "spoofVendingFinger" $MODPATH/custom.pif.json) ]; then
+    if [ -n $(grep -q -L -e "api_level" -e "verboseLogs" -e "spoofVendingSdk" -e "spoofVendingFinger" $MODPATH/custom.pif.json) ]; then
         ui_print "- Running migration script on custom.pif.json:"
         ui_print " "
         chmod 755 $MODPATH/migrate.sh
