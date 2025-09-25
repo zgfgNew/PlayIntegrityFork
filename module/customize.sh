@@ -38,13 +38,14 @@ if [ -d "$MODPATH/zygisk" ]; then
     . $MODPATH/common_setup.sh
 fi
 
+FILE="$MODPATH/custom.pif.json"
 # Migrate custom.pif.json to latest defaults if needed
-if [ -f "$MODPATH/custom.pif.json" ]; then
-    if ! grep -q "api_level" $MODPATH/custom.pif.json || ! grep -q "spoofVendingSdk" $MODPATH/custom.pif.json || ! grep -q "spoofVendingFinger" $MODPATH/custom.pif.json; then
+if [ -f $FILE ]; then
+    if ! (grep -q '*api_level' $FILE && grep -q spoofVendingSdk $FILE && grep -q spoofVendingFinger $FILE); then
         ui_print "- Running migration script on custom.pif.json:"
         ui_print " "
         chmod 755 $MODPATH/migrate.sh
-        sh $MODPATH/migrate.sh --install --force --advanced $MODPATH/custom.pif.json
+        sh $MODPATH/migrate.sh --install --force --advanced $FILE
         ui_print " "
     fi
 fi
